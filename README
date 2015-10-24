@@ -8,9 +8,10 @@ The command to initialize the server :
 
 connect from browser tutorial 
 for example if your port is 8451  
-and you want to visit index.html
-enter this as your url (this must do after you set up server )
+and you want to visit aboutus/index.html
+following is your url (this must do after you set up server )
+luffy.ee.ncku.edu.tw:8451 is in public dir so this url is like
 
-luffy.ee.ncku.edu.tw:8451/index.html
+luffy.ee.ncku.edu.tw:8451/aboutus/index.html
 
 
