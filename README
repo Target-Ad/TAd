@@ -1,0 +1,17 @@
+The command to initialize the server :
+1. npm i
+2. echo 'any number' > port //p.s. any number had better greater than 8000 to be a safer port
+3. npm start
+
+
+=============================================================================================
+
+connect from browser tutorial 
+for example if your port is 8451  
+and you want to visit aboutus/index.html
+following is your url (this must do after you set up server )
+luffy.ee.ncku.edu.tw:8451 is in public dir so this url is like
+
+luffy.ee.ncku.edu.tw:8451/aboutus/index.html
+
+
