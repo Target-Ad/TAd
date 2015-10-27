@@ -6,7 +6,7 @@ var param;
 param = querystring.parse(query);
 switch (param.action) {
 	case 'signup':
-		console.log("nanoha");
+		console.log("this do is correct");
 		fs.writeFile(param.account, param.pw, function(err){
 			output(JSON.stringify({nanoha: 'nanoha', fate: 'fate', hayate: 'hayate'}));
 		})
