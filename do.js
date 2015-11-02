@@ -1,26 +1,37 @@
 var querystring, dir, toString$ = {}.toString;
 querystring = require('querystring');
 fs = require('fs');
+pwhash = require('password-hash');
 function Do(query, outputer, page){
 var param;
 param = querystring.parse(query);
+//output(JSON.stringify(param));
 switch (param.page) {
-	case 'test':
-		delete param.action;
-		var content = JSON.stringify(param)
-		fs.writeFile('./user/'+param.account, content, function(err){
-			output(JSON.stringify({nanoha: 'nanoha', fate: 'fate', hayate: 'hayate'}));
-		})
-		break;
 	case 'homepage':
 		switch(param.action){
 		case 'login':
 			fs.readFile('./user/'+param.account,'utf8', function(err, data){
 				if(err){
-					output(JSON.stringify({nanoha: 'nanoha', fate: 'fate', hayate: 'hayate'}));
-					
+					output(JSON.stringify({error:"no account"}));
 				}
-			})
+				else{
+					var usr = JSON.parse(data);
+					if(pwhash.verify(param.pw,usr.pw)){
+						output(JSON.stringify({success : "pw confirm"}));
+					}
+					else{
+						output(JSON.stringify({error: "pw not match"}))
+					}
+				}
+			});
+			break;
+		case 'register':
+			delete param.action;
+			param.pw = pwhash.generate(param.pw);
+			var content = JSON.stringify(param);
+			fs.writeFile('./user/'+param.account, content, function(err){
+				output(JSON.stringify({error : "write file error"}));
+			});
 			break;
 		default:
 			output(JSON.stringify({stage:'default'}));
