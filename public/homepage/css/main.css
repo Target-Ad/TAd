@@ -30,6 +30,7 @@ body{
     top: 20%;
     display: none;
     border: 20px solid #000000;
+    padding-top: 1%;
 }
 
 #login-block input{
@@ -37,7 +38,7 @@ body{
     text-align: center;
     padding: 1% 0;
     border-radius: 5px;
-    border: 7px solid #737373;
+    border: 2px solid #737373;
     position: relative;
     display: block;
     margin: 0 auto;
@@ -54,14 +55,65 @@ body{
 
 }
 
-#log_in_button{
-    font-size: 19px;
+#login_btn{
+    font-size: 18px;
+    font-weight: bolder;
+    width: 30%;
+    text-align: center;
+    position: relative;
+    margin-top: 11%;
+    margin: 8% 35%;
+    background-color: #737373;
+    color: ghostwhite;
+
+}
+
+
+#regis-block{
+    position: fixed;
+    z-index: 100001;
+    width: 30%;
+    height: 60%;
+    border-radius: 50%;
+    background-color: white;
+    position: fixed;
+    left: 35%;
+    top: 20%;
+    display: none;
+    border: 20px solid #000000;
+    padding-top: 2%;
+}
+
+#regis_btn{
+    font-size: 16px;
+     width: 30%;
     font-weight: bolder;
     text-align: center;
     position: relative;
     margin-top: 11%;
-    margin: 8% 38% auto;
+    margin: 3% 35%;
     background-color: #737373;
     color: ghostwhite;
 
+}
+
+#regis_word{
+    font-size: 17px;
+    font-weight: bolder;
+    text-align: center;
+    position: relative;
+    margin-top: 3%;
+    display: block;
+}
+
+#regis-block input{
+    width: 61%;
+    text-align: center;
+    padding: 0% 0;
+    border-radius: 5px;
+    border: 2px solid #737373;
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    margin-top: 0%;
 }

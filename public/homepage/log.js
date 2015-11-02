@@ -7,6 +7,17 @@ $(document).ready(function(){
         $('#overlay, #login-block').hide();
     });
     
+     $("#Register").click(function(){		
+     $('#overlay, #regis-block').show();
+    });
+    
+    $('#overlay').click(function(){
+        $('#overlay, #regis-block').hide();
+    });
+    
+    
+    
+    
     var height = $('body').css('height');
     $('#overlay').css('height', height);
 
