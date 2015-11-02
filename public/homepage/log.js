@@ -50,6 +50,7 @@ $(document).ready(function(){
 		repw = $("#regis_pw_re").val();
 		if(repw === pw){
 			console.log("pw ="+pw+"\naccount ="+account);
+			$('#overlay, #regis-block').hide();
 			$.getJSON('do', {
 				page: 'homepage',
 				action: 'register', 
