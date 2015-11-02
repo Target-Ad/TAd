@@ -2,6 +2,9 @@ $(document).ready(function(){
     $("#log_in").click(function(){		
         $('#overlay, #login-block').show();
     });
+      
+    var height = $('body').css('height');
+    $('#overlay').css('height', height);
     
     $('#overlay').click(function(){
         $('#overlay, #login-block').hide();
@@ -10,16 +13,15 @@ $(document).ready(function(){
      $("#Register").click(function(){		
      $('#overlay, #regis-block').show();
     });
+      
+    var height = $('body').css('height');
+    $('#overlay').css('height', height);
     
     $('#overlay').click(function(){
         $('#overlay, #regis-block').hide();
     });
     
-    
-    
-    
-    var height = $('body').css('height');
-    $('#overlay').css('height', height);
+
 
 	$("#login__btn").click(function(e){
 		e.preventDefault();
