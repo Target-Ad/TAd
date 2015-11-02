@@ -23,7 +23,7 @@ $(document).ready(function(){
     
 
 
-	$("#login__btn").click(function(e){
+	$("#login_btn").click(function(e){
 		e.preventDefault();
 		account = $("#login_usr").val();
 		pw = $("#login_pw").val();
