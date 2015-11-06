@@ -6,8 +6,10 @@
   },
   "name": "gulp_pack",
   "dependencies": {
+    "LiveScript": "~1.2.0",
     "express": "~3.4.8",
-    "LiveScript": "~1.2.0"
+    "express-session": "^1.12.1",
+    "mongo-express": "^0.24.0"
   },
   "devDependencies": {
     "npm": "~1.3.11",

@@ -1,12 +1,13 @@
 var querystring, dir, toString$ = {}.toString;
 querystring = require('querystring');
 fs = require('fs');
+session = require('express-session');
 pwhash = require('password-hash');
 function Do(query, outputer, page){
 var param;
 param = querystring.parse(query);
 //output(JSON.stringify(param));
-switch (param.page) {
+switch (page) {
 	case 'homepage':
 		switch(param.action){
 		case 'login':
@@ -27,6 +28,7 @@ switch (param.page) {
 			break;
 		case 'register':
 			delete param.action;
+			delete param.page;
 			param.pw = pwhash.generate(param.pw);
 			var content = JSON.stringify(param);
 			fs.writeFile('./user/'+param.account, content, function(err){

@@ -10,7 +10,8 @@
     <meta name="author" content="">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <title>Homepage</title>
+	<script src="js/js.cookie.js"></script>
+	<title>Homepage</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +44,7 @@
         <input type="text" id="login_usr">
         <span id="login_word" style="color:orange;">Password:</span>
         <input type="password" id="login_pw" >
-         <button class="ui button" id="login_btn">Login</button>
+		<button class="ui button" id="login_btn">Login</button>
 	 
     </div>
         <div id='regis-block'>
@@ -81,8 +82,8 @@
                 <ul class="nav navbar-nav navbar-right">
    
                     <li class="page-scroll">
-                        <button class="ui left attached button" id="log_in">Login</button>
-                        <button class="right attached ui button" id = "Register">Register</button>
+					<button class="ui left attached button" id="log_in"><p id="log_in_out">Login</p></button>
+					<button class="right attached ui button" id = "Register"><p id="regis_con">Register</p></button>
                         
                     </li>
                 </ul>

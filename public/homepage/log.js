@@ -1,4 +1,11 @@
 $(document).ready(function(){
+	var isLog = Cookies.get('login_success');
+	if(isLog == "confirm"){
+		$(".navbar-fixed-top").append("<div class=\"ui label\" ><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+Cookies.get('account')+"</span></div>");
+		$("#welcome_usr").css("color","#006030").css("font-size","150%");
+		$("#log_in_out").text("Logout");
+		$("#Register").hide();
+	}
     $("#log_in").click(function(){		
         $('#overlay, #login-block').show();
     });
@@ -39,6 +46,10 @@ $(document).ready(function(){
 				$('#overlay, #login-block').hide();
 				$(".navbar-fixed-top").append("<div class=\"ui label\" ><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+account+"</span></div>");
 				$("#welcome_usr").css("color","#006030").css("font-size","150%");
+				Cookies.set('login_success','confirm',{expires:15, path:'/'});
+				Cookies.set('account',account,{expires:15, path:'/'});
+				$("#log_in_out").text("Logout");
+				$("#Register").hide();
 			}
 			console.log(r);
 		});
