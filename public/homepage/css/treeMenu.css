@@ -1,0 +1,54 @@
+
+h1, ul {
+ margin: 0;
+ padding: 0;
+}
+
+.TreeMenu {
+ width: 10em;
+}
+
+.TreeMenu .section {
+ line-height: 1.1;
+}
+.TreeMenu .section h1 {
+ font-size: 100%;
+ font-weight: normal;
+ background: rgb(85%,70%,90%);
+ padding-top: 0.25em;
+ padding-bottom: 0.25em;
+}
+
+.TreeMenu .section ul {
+ list-style: none;
+ margin-left: 0.5em;
+ border-left: 1px solid;
+}
+
+*+html .TreeMenu .section ul {
+ zoom:1;
+ padding-bottom:1px;
+ margin-bottom:-1px;
+} /*hack IE 7*/
+* html .TreeMenu .section ul {
+ zoom:1;
+ padding-bottom:1px;
+ margin-bottom:-1px;
+} /*hack IE 6*/
+
+.TreeMenu .section li {
+ padding-left: 0.5em;
+ border-bottom: 1px solid;
+}
+
+.TreeMenu .section li a {
+ text-decoration: none;
+ position: relative;
+ top: 0.55em;
+ background: rgb(100%,100%,100%);
+ display: block;
+}
+
+.level2 {
+	margin-left: 0.5em;
+}
