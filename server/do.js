@@ -1,39 +1,27 @@
 var querystring, dir, toString$ = {}.toString;
 querystring = require('querystring');
 fs = require('fs');
+usrsys = require('./db-usrsystem.js')
 session = require('express-session');
 pwhash = require('password-hash');
 function Do(query, outputer, page){
 var param;
 param = querystring.parse(query);
 //output(JSON.stringify(param));
-switch (page) {
+switch (param.page) {
 	case 'homepage':
 		switch(param.action){
 		case 'login':
-			fs.readFile('./user/'+param.account,'utf8', function(err, data){
-				if(err){
-					output(JSON.stringify({error:"no account"}));
-				}
-				else{
-					var usr = JSON.parse(data);
-					if(pwhash.verify(param.pw,usr.pw)){
-						output(JSON.stringify({success : "pw confirm"}));
-					}
-					else{
-						output(JSON.stringify({error: "pw not match"}))
-					}
-				}
-			});
+			console.log("login func");	
+			delete param.action;
+			delete param.page;
+			usrsys.usrPasswordCheck(param, function(result){output(JSON.stringify(result))});
 			break;
 		case 'register':
 			delete param.action;
 			delete param.page;
 			param.pw = pwhash.generate(param.pw);
-			var content = JSON.stringify(param);
-			fs.writeFile('./user/'+param.account, content, function(err){
-				output(JSON.stringify({error : "write file error"}));
-			});
+			usrsys.inputUsr({account: param.account, pw:param.pw, postAd: param.postAd});
 			break;
 		default:
 			output(JSON.stringify({stage:'default'}));
@@ -58,4 +46,4 @@ function output(it){
 process.on('uncaughtException', function(it){ ERR(it); });
 }
 module.exports = Do;
-// vi:sw=4:ts=4
+// vi:sw=4:ts=4:set nu

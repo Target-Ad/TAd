@@ -1,15 +1,18 @@
 $(document).ready(function(){
 	var isLog = Cookies.get('login_success');
 	if(isLog == "confirm"){
-		$(".navbar-fixed-top").append("<div class=\"ui label\" ><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+Cookies.get('account')+"</span></div>");
+		$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+Cookies.get('account')+"</span></div>");
 		$("#welcome_usr").css("color","#006030").css("font-size","150%");
-		$("#log_in_out").text("Logout");
+		$("#log_in").hide();
+		$("#log_out").show();
 		$("#Register").hide();
 	}
-    $("#log_in").click(function(){		
+	else{
+    $("#log_out").hide();
+    }
+	$("#log_in").click(function(){		
         $('#overlay, #login-block').show();
     });
-      
     var height = $('body').css('height');
     $('#overlay').css('height', height);
     
@@ -44,15 +47,22 @@ $(document).ready(function(){
 			if(r.success === "pw confirm"){
 				console.log("pw confirm stage");
 				$('#overlay, #login-block').hide();
-				$(".navbar-fixed-top").append("<div class=\"ui label\" ><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+account+"</span></div>");
+				$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+account+"</span></div>");
 				$("#welcome_usr").css("color","#006030").css("font-size","150%");
 				Cookies.set('login_success','confirm',{expires:15, path:'/'});
 				Cookies.set('account',account,{expires:15, path:'/'});
-				$("#log_in_out").text("Logout");
 				$("#Register").hide();
+				$("#log_out").show();
+				$("#log_in").hide();
 			}
 			console.log(r);
 		});
+	});
+	$("#log_out").click(function(){
+		$("#welcome-div").remove();
+		$("#Register").show();
+		$("#log_in").show();
+		$("#log_out").hide();
 	});
 	$("#regis_btn").click(function(e){
 		e.preventDefault();
@@ -66,7 +76,8 @@ $(document).ready(function(){
 				page: 'homepage',
 				action: 'register', 
 				account: account,
-				pw:pw 
+				pw:pw,
+				postAd:[]
 			}, function(r){
 				console.log(r);
 			});
