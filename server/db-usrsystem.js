@@ -23,22 +23,31 @@ module.exports = {
       var collection;
       console.log("checking user:" + inputusr.account + " data");
       collection = db.collection('usrModels');
-      collection.findOne({
+      if (collection.findOne({
         account: inputusr.account
-      }).then(function(usrDoc){
-        console.log("data get from database ");
-        console.log(usrDoc);
-        if (passwordHash.verify(inputusr.pw, usrDoc.pw)) {
-          cb({
-            success: "pw confirm"
-          });
-        } else {
-          cb({
-            error: "pw not match"
-          });
-        }
+      } > 0)) {
+        collection.findOne({
+          account: inputusr.account
+        }).then(function(usrDoc){
+          console.log("data get from database ");
+          console.log(usrDoc);
+          if (passwordHash.verify(inputusr.pw, usrDoc.pw)) {
+            cb({
+              success: "pw confirm"
+            });
+          } else {
+            cb({
+              error: "pw not match"
+            });
+          }
+          db.close();
+        });
+      } else {
+        cb({
+          error: "pw not match"
+        });
         db.close();
-      });
+      }
     });
   }
 };

@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	var isLog = Cookies.get('login_success');
 	if(isLog == "confirm"){
-		$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+Cookies.get('account')+"</span></div>");
+		$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+Cookies.get('name')+"</span></div>");
 		$("#welcome_usr").css("color","#006030").css("font-size","150%");
 		$("#log_in").hide();
 		$("#log_out").show();
@@ -45,20 +45,22 @@ $(document).ready(function(){
 			pw:pw 
 		}, function(r){
 			if(r.success === "pw confirm"){
+				var name = account;
 				console.log("pw confirm stage");
 				$('#overlay, #login-block').hide();
-				$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+account+"</span></div>");
+				$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+name+"</span></div>");
 				$("#welcome_usr").css("color","#006030").css("font-size","150%");
 				Cookies.set('login_success','confirm',{expires:15, path:'/'});
-				Cookies.set('account',account,{expires:15, path:'/'});
+				Cookies.set('name',name,{expires:15, path:'/'});
 				$("#Register").hide();
 				$("#log_out").show();
 				$("#log_in").hide();
-			}
+			}		
 			console.log(r);
 		});
 	});
 	$("#log_out").click(function(){
+		Cookies.set('login_success', 'failed');
 		$("#welcome-div").remove();
 		$("#Register").show();
 		$("#log_in").show();
@@ -87,4 +89,47 @@ $(document).ready(function(){
 		}
 		
 	});
+
+
+	function google_login(){
+		var pattern, code, data;
+		pattern = new RegExp("code=(.*)");
+		isGetCode = pattern.exec(location.href);
+		if (isGetCode) {
+			if(Cookies.get('login_success')!="confirm"){
+				$('#google-login').click(function(){
+				$.getJSON('do', {
+					page: 'homepage',
+					action: 'getUsrData',
+					code: isGetCode[1]
+				}, function(r){
+					console.log(r);
+					$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+r.name+"</span></div>");
+					$("#welcome_usr").css("color","#006030").css("font-size","150%");
+					Cookies.set('login_success','confirm',{expires:15, path:'/'});
+					Cookies.set('name',r.name,{expires:15, path:'/'});
+					$("#Register").hide();
+					$("#log_out").show();
+					$("#log_in").hide();
+				});
+				});
+			}
+			else{
+				location.href = "http://luffy.ee.ncku.edu.tw:8451/homepage/homepage.html";
+			}
+		} else {
+			return $('#google-login').click(function(){
+				$.getJSON('do', {
+					page: 'homepage',
+					action: 'getAuthUrl', 
+				}, function(r){
+					console.log("response get from server =\n"+r)
+					location.href = r;
+				});
+			
+			});
+			}
+	} google_login();
+	
+
 });

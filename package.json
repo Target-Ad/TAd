@@ -9,13 +9,18 @@
     "LiveScript": "~1.2.0",
     "express": "~3.4.8",
     "express-session": "^1.12.1",
+    "google-auth-library": "^0.9.7",
+    "googleapis": "^2.1.6",
     "gulp": "^3.9.0",
     "gulp-livescript": "^2.4.0",
     "livescript": "^1.4.0",
     "mongo-express": "^0.25.0",
     "mongodb": "^2.0.48",
     "mongoose": "^4.2.5",
+    "node-google-api": "^0.3.0",
     "password-hash": "^1.2.2",
+    "q": "^1.4.1",
+    "request": "^2.67.0",
     "sync": "^0.2.5"
   },
   "devDependencies": {

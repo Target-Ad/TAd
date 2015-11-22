@@ -1,7 +1,8 @@
 var querystring, dir, toString$ = {}.toString;
 querystring = require('querystring');
 fs = require('fs');
-usrsys = require('./db-usrsystem.js')
+usrsys = require('./db-usrsystem.js');
+connectapi = require('./googlecalender.js')
 session = require('express-session');
 pwhash = require('password-hash');
 function Do(query, outputer, page){
@@ -22,6 +23,18 @@ switch (param.page) {
 			delete param.page;
 			param.pw = pwhash.generate(param.pw);
 			usrsys.inputUsr({account: param.account, pw:param.pw, postAd: param.postAd});
+			break;
+		case 'getAuthUrl':
+			console.log('in getAuthUrl');
+			delete param.action;
+			delete param.page;
+			var credentialUrl;
+			connectapi.getAuthUrl(function(returnUrl){output(JSON.stringify(returnUrl))});
+			break;
+		case 'getUsrData':
+			delete param.action;
+			delete param.page;
+			connectapi.getUsrData(param.code, function(result){output(JSON.stringify(result))});
 			break;
 		default:
 			output(JSON.stringify({stage:'default'}));

@@ -14,13 +14,17 @@ module.exports =
 		mg-client.connect url, (err, db)!->
 			console.log "checking user:#{inputusr.account} data"
 			collection = db.collection \usrModels
-			collection.findOne {account: inputusr.account} .then (usr-doc)!->
-				console.log "data get from database "
-				console.log usr-doc
-				if password-hash.verify inputusr.pw, usr-doc.pw
-					cb {success : "pw confirm"}
-				else
-					cb {error: "pw not match"}
+			if collection.findOne {account: inputusr.account}>0
+				collection.findOne {account: inputusr.account} .then (usr-doc)!->
+					console.log "data get from database "
+					console.log usr-doc
+					if password-hash.verify inputusr.pw, usr-doc.pw
+						cb {success : "pw confirm"}
+					else
+						cb {error: "pw not match"}
+					db.close!
+			else
+				cb {error: "pw not match"}
 				db.close!
 
 
