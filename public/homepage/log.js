@@ -90,7 +90,7 @@ $(document).ready(function(){
 		
 	});
 
-
+	//在前端頁面處理仍有一些邏輯問題要解決 設法區別再拿到code之後重新整理得狀況
 	function google_login(){
 		var pattern, code, data;
 		pattern = new RegExp("code=(.*)");
