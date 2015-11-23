@@ -6,6 +6,7 @@ port = parseInt(fs.readFileSync('port', {
   encoding: 'utf-8'
 }));
 expressServer = express();
+expressServer.disable('etag');
 expressServer.get('/do', function(req, res){
   Do(req._parsedUrl.query, res);
 });

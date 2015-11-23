@@ -8,7 +8,7 @@ module.exports = {
     mgClient.connect(url, function(err, db){
       var collection;
       console.log("inputing usr");
-      console.log(usr);
+      usr.postAd = [];
       collection = db.collection('usrModels');
       return collection.insertOne(usr, {
         w: 1
@@ -48,6 +48,35 @@ module.exports = {
         });
         db.close();
       }
+    });
+  },
+  postAd: function(inputAd, cb){
+    console.log("posting ad");
+    return mgClient.connect(url, function(err, db){
+      var collection;
+      collection = db.collection('postAdModels');
+      return collection.insertOne(inputAd, {
+        w: 1
+      }, function(err, result){
+        cb(result);
+        return db.close();
+      });
+    });
+  },
+  getInitialData: function(cb){
+    console.log("get initial data");
+    return mgClient.connect(url, function(err, db){
+      var collection;
+      collection = db.collection('postAdModels');
+      return collection.find().limit(6).sort({
+        rand: 1
+      }).toArray(function(err, doc){
+        console.log(doc);
+        cb({
+          response: doc
+        });
+        return db.close();
+      });
     });
   }
 };

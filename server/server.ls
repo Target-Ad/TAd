@@ -2,6 +2,7 @@ require! <[express fs]>
 Do = require \./do.js
 port = parseInt(fs.readFileSync \port encoding: \utf-8)
 express-server = express!
+express-server.disable \etag
 express-server.get \/do (req, res) !-> Do req._parsed-url.query, res
 express-server.get \/login/do (req, res) !-> Do req._parsed-url.query, res, \login
 express-server.get \/homepage/do (req, res) !-> Do req._parsed-url.query, res, \register

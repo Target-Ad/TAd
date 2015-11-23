@@ -9,6 +9,7 @@ function Do(query, outputer, page){
 var param;
 param = querystring.parse(query);
 //output(JSON.stringify(param));
+console.log(param);
 switch (param.page) {
 	case 'homepage':
 		switch(param.action){
@@ -36,8 +37,14 @@ switch (param.page) {
 			delete param.page;
 			connectapi.getUsrData(param.code, function(result){output(JSON.stringify(result))});
 			break;
+		case 'getInitialData':
+			delete param.action;
+			delete param.page;
+			console.log("in get initial data");
+			usrsys.getInitialData(function(result){output(JSON.stringify(result))});
+			break;
 		default:
-			output(JSON.stringify({stage:'default'}));
+			output(JSON.stringify({stage:'123default'}));
 			break;
 		}
 		break;

@@ -30,7 +30,20 @@ $(document).ready(function(){
     $('#overlay').click(function(){
         $('#overlay, #regis-block').hide();
     });
-    
+    /*ask database for initial ad to post*/
+	var appendcontent; 
+	$.getJSON('do', {
+		page: 'homepage',
+		action: 'getInitialData',
+		name: Cookies.get('name')
+	}, function(r){
+		console.log(r);
+		for(var i =0; i<6;i++){
+			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img src='./postAdImage/"+r.response[i]._id+".jpg'alt=\"\"/><div class=\"caption\"><div class=\"topic\"><p>"+r.response[i].topic+"</p></div><div class=\"contents\"><p>"+r.response[i].content+"</p></div></div><button  class = \"discard\">discard</button><button  class = \"collect\">keep</button></div></div> "; 
+			$("#box").append(appendcontent);
+		}
+
+	});
 
 
 	$("#login_btn").click(function(e){
@@ -40,7 +53,7 @@ $(document).ready(function(){
 		console.log("pw ="+pw+"\naccount ="+account);
 		$.getJSON('do', {
 			page: 'homepage',
-			action: 'login', 
+			action: 'login', 	
 			account: account,
 			pw:pw 
 		}, function(r){
@@ -79,7 +92,6 @@ $(document).ready(function(){
 				action: 'register', 
 				account: account,
 				pw:pw,
-				postAd:[]
 			}, function(r){
 				console.log(r);
 			});

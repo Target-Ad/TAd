@@ -2,6 +2,7 @@ body{
     padding: 0;
     position: absolute;
     width: 100%;
+    font-family:Microsoft JhengHei;
 
 }
 
@@ -56,6 +57,8 @@ body{
 
 }
 
+
+
 #login_btn{
     font-size: 18px;
     font-weight: bolder;
@@ -66,8 +69,12 @@ body{
     margin: 8% 35%;
     background-color: #737373;
     color: ghostwhite;
-
+    
+    
+    
+    
 }
+
 
 
 #regis-block{
@@ -117,4 +124,148 @@ body{
     display: block;
     margin: 0 auto;
     margin-top: 0%;
+}
+
+
+#Register {
+    background-color:#FFE74E;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: 1px solid #ffaa22;
+    display: inline-block;
+    cursor: pointer;
+    color:#FFFFFF;;
+    font-family: Arial;
+    font-size: 12px;
+    padding-top: 8px;
+    margin-top: 5px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffee66;
+  width: 50px;
+ 
+}
+#Register:hover {
+	background-color:#ffab23;
+    color: #ffffff;
+    
+}
+#Register:active {
+	position:relative;
+	top:1px;
+}
+
+
+#log_in {
+    background-color: #FF8176;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: 1px solid #ffaa22;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 12px;
+    padding-top: 8px;
+    margin-top: 5px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffee66;
+    width: 50px;
+
+}
+#log_in:hover {
+	background-color:#FF4242;
+    color: #ffffff;
+    
+}
+#log_in:active {
+	position:relative;
+	top:1px;
+}
+
+
+.discard{
+background-color: #FF8176;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 4px;
+    border: 1px solid #FF9600;
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: Arial;
+    font-size: 12px;
+    padding-top: 5px;
+    margin-top: 5px;
+    text-decoration: none;
+    text-shadow: 0px 0px 0px #FFFFFF;
+    width: 50px;
+}
+.discard:active{
+	position:relative;
+	top:1px;
+}
+
+
+.collect{
+float: right;
+   background-color: #FFE74E;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 4px;
+    border: 1px solid #FF9600;
+    display: inline-block;
+    cursor: pointer;
+    color: #9E7560;
+    font-family: Arial;
+    font-size: 12px;
+    padding-top: 5px;
+    margin-top: 5px;
+    text-decoration: none;
+    text-shadow: 0px 0px 0px #FFFFFF;
+    width: 50px;
+
+}
+
+.collect:active{
+	position:relative;
+	top:1px;
+}
+
+.topic p{
+font-size: 15px;
+text-align: -webkit-center;
+font-weight: bolder;
+
+}
+
+.contents{
+    background-color: rgb(232, 241, 249);
+}
+
+
+
+.caption{
+ cursor: pointer;
+background-color: #E8F1F9;
+}
+
+.contents p{
+margin:0px;
+}
+
+
+
+.detail{
+    position: fixed;
+    z-index: 100001;
+    width: 30%;
+    height: 60%;
+    background-color: white;
+    position: fixed;
+    left: 35%;
+    top: 20%;
+    display: none;
+    padding-top: 1%;
 }
