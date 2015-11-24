@@ -1,4 +1,4 @@
-require! <[mongodb password-hash]>
+require! <[mongodb password-hash q]>
 mg-client = mongodb.MongoClient
 url = \mongodb://team18:73191020@localhost/team18/
 module.exports =
@@ -35,11 +35,16 @@ module.exports =
 				cb result
 				db.close!
 	get-initial-data: (cb)->
-		console.log "get initial data"
 		mg-client.connect url, (err, db)->
 			collection = db.collection \postAdModels
 			collection.find!.limit(6).sort({rand:1}).toArray (err, doc)->
 				console.log doc
 				cb {response:doc}
+				db.close!
+	ask-for-new-ad: (cb)->
+		mg-client.connect url, (err, db)->
+			collection = db.collection \postAdModels
+			collection.findOne! .then (doc)->
+				cb doc
 				db.close!
 

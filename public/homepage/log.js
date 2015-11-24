@@ -6,13 +6,19 @@ $(document).ready(function(){
 		$("#log_in").hide();
 		$("#log_out").show();
 		$("#Register").hide();
+		$("#Upload").show();
 	}
 	else{
     $("#log_out").hide();
+	$("#Upload").hide();
     }
+	$("#Upload").click(function(){ $('#overlay, #upload-block').show();});
+    $('#overlay').click(function(){
+        $('#overlay, #upload-block').hide();
+    });
 	$("#log_in").click(function(){		
         $('#overlay, #login-block').show();
-    });
+    });		
     var height = $('body').css('height');
     $('#overlay').css('height', height);
     
@@ -39,12 +45,31 @@ $(document).ready(function(){
 	}, function(r){
 		console.log(r);
 		for(var i =0; i<6;i++){
-			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img src='./postAdImage/"+r.response[i]._id+".jpg'alt=\"\"/><div class=\"caption\"><div class=\"topic\"><p>"+r.response[i].topic+"</p></div><div class=\"contents\"><p>"+r.response[i].content+"</p></div></div><button  class = \"discard\">discard</button><button  class = \"collect\">keep</button></div></div> "; 
+			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i]._id+".jpg'alt=\"\"/><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].content+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
 			$("#box").append(appendcontent);
 		}
+		$(".discard").click(function(e){
+			var id = $(this).attr("id");
+			console.log(id);
+			var data;
+			data = {
+				page: 'homepage',
+				action: 'askForNewAd',
+				type: 'discard'
+			};
+			if (Cookies.get('login_success' === 'confirm')) {
+			  data.user = Cookies.get('name');
+			  }
+
+			$.getJSON('do', data, 
+			function(r){
+				$("#Ad-image-"+id).attr("src", "./postAdImage/"+r._id+".jpg");
+				$("#Ad-topic-"+id).text(r.topic);
+				$("#Ad-content-"+id).text(r.content);
+			});
+		});
 
 	});
-
 
 	$("#login_btn").click(function(e){
 		e.preventDefault();
@@ -68,6 +93,7 @@ $(document).ready(function(){
 				$("#Register").hide();
 				$("#log_out").show();
 				$("#log_in").hide();
+				$("#Upload").show();
 			}		
 			console.log(r);
 		});
@@ -78,6 +104,7 @@ $(document).ready(function(){
 		$("#Register").show();
 		$("#log_in").show();
 		$("#log_out").hide();
+		$("#Upload").hide();
 	});
 	$("#regis_btn").click(function(e){
 		e.preventDefault();

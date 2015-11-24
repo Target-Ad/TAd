@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="js/js.cookie.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<!--<script type="text/javascript" src="ajaxfileupload.js"></script>-->
 	<title>Homepage</title>
 
     <!-- Bootstrap Core CSS -->
@@ -36,7 +38,6 @@
     <link href="css/main.css" rel="stylesheet">
 	<link href="css/treeMenu.css" rel="stylesheet">
     <script src="log.js"></script>
-    <script src="content.js"></script>
 </head>
 
 <body>
@@ -65,6 +66,24 @@
 	 
     </div>
     
+        <div id='upload-block'>
+        <span id="upload_word" style="color:red;" >Activity:</span>
+        <input type="text" id="upload_activity">
+        <span id="upload_word" style="color:orange;">Shop:</span>
+        <input type="text" id="upload_shop" >
+        <span id="upload_word" style="color:red;">Lacation:</span>
+        <input type="text" id="upload_location" >
+        <span id="upload_word" style="color:orange;">Time:</span>
+        <input type="text" id="upload_time" >
+        <span id="upload_word" style="color:red;">Image:</span>
+            
+        <form name="uploadimage" action="" method="POST" enctype="multipart/form-data"> 
+        <input name="fileToUpload" type="file" id="fileToUpload">
+        </form>
+            
+        <button class="ui button" id="upload_btn" onclick="ajaxFileUpload();return false;">Upload</button>
+            
+    </div>
     
     
     
@@ -87,8 +106,9 @@
                 <ul class="nav navbar-nav navbar-right">
    
                     <li class="page-scroll">
-					<button  id="log_in"><p id="log_in_out">登入</p></button>
+					<button  id="log_in"><p>登入</p></button>
 					<button  id = "Register"><p id="regis_con">註冊</p></button>
+					<button class="ui button" id ="Upload"><p id="regis_con">上傳</p></button>
 					<button class="ui labeled icon button" id="log_out">登出</button>
                     </li>
                 </ul>

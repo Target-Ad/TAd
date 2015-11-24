@@ -43,6 +43,12 @@ switch (param.page) {
 			console.log("in get initial data");
 			usrsys.getInitialData(function(result){output(JSON.stringify(result))});
 			break;
+		case 'askForNewAd':
+			delete param.acton;
+			delete param.page;
+			console.log("ask for new ad");
+			usrsys.askForNewAd(function(result){output(JSON.stringify(result))});
+			break;
 		default:
 			output(JSON.stringify({stage:'123default'}));
 			break;

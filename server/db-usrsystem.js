@@ -1,6 +1,7 @@
-var mongodb, passwordHash, mgClient, url;
+var mongodb, passwordHash, q, mgClient, url;
 mongodb = require('mongodb');
 passwordHash = require('password-hash');
+q = require('q');
 mgClient = mongodb.MongoClient;
 url = 'mongodb://team18:73191020@localhost/team18/';
 module.exports = {
@@ -64,7 +65,6 @@ module.exports = {
     });
   },
   getInitialData: function(cb){
-    console.log("get initial data");
     return mgClient.connect(url, function(err, db){
       var collection;
       collection = db.collection('postAdModels');
@@ -75,6 +75,16 @@ module.exports = {
         cb({
           response: doc
         });
+        return db.close();
+      });
+    });
+  },
+  askForNewAd: function(cb){
+    return mgClient.connect(url, function(err, db){
+      var collection;
+      collection = db.collection('postAdModels');
+      return collection.findOne().then(function(doc){
+        cb(doc);
         return db.close();
       });
     });
