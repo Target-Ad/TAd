@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	var isLog = Cookies.get('login_success');
 	if(isLog == "confirm"){
-		$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+Cookies.get('name')+"</span></div>");
+		$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome  "+Cookies.get('name')+"</span></div>");
 		$("#welcome_usr").css("color","#006030").css("font-size","150%");
 		$("#log_in").hide();
 		$("#log_out").show();
@@ -45,7 +45,7 @@ $(document).ready(function(){
 	}, function(r){
 		console.log(r);
 		for(var i =0; i<6;i++){
-			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i]._id+".jpg'alt=\"\"/><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].content+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
+			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].content+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
 			$("#box").append(appendcontent);
 		}
 		$(".discard").click(function(e){
@@ -63,14 +63,29 @@ $(document).ready(function(){
 
 			$.getJSON('do', data, 
 			function(r){
-				$("#Ad-image-"+id).attr("src", "./postAdImage/"+r._id+".jpg");
+				$("#Ad-image-"+id).attr("src", "./postAdImage/"+r.imag+".jpg");
 				$("#Ad-topic-"+id).text(r.topic);
 				$("#Ad-content-"+id).text(r.content);
 			});
 		});
 
 	});
+	$('#uploadForm').submit(function() {
+		$("#status").empty().text("File is uploading...");
+		$(this).ajaxSubmit({
 
+			error: function(xhr) {
+				status('Error: ' + xhr.status);
+			},
+
+			success: function(response) {
+				$("#status").empty().text(response);
+				console.log(response);
+			}
+		});
+		//Very important line, it disable the page refresh.
+		return false;
+	});    
 	$("#login_btn").click(function(e){
 		e.preventDefault();
 		account = $("#login_usr").val();
@@ -86,7 +101,7 @@ $(document).ready(function(){
 				var name = account;
 				console.log("pw confirm stage");
 				$('#overlay, #login-block').hide();
-				$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+name+"</span></div>");
+				$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome  "+name+"</span></div>");
 				$("#welcome_usr").css("color","#006030").css("font-size","150%");
 				Cookies.set('login_success','confirm',{expires:15, path:'/'});
 				Cookies.set('name',name,{expires:15, path:'/'});

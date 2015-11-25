@@ -45,6 +45,7 @@ module.exports =
 		mg-client.connect url, (err, db)->
 			collection = db.collection \postAdModels
 			collection.findOne! .then (doc)->
+				console.log "find in database"
 				cb doc
 				db.close!
 

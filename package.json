@@ -13,10 +13,12 @@
     "googleapis": "^2.1.6",
     "gulp": "^3.9.0",
     "gulp-livescript": "^2.4.0",
+    "jquery-file-upload-middleware": "^0.1.7",
     "livescript": "^1.4.0",
     "mongo-express": "^0.25.0",
     "mongodb": "^2.0.48",
     "mongoose": "^4.2.5",
+    "multer": "^1.1.0",
     "node-google-api": "^0.3.0",
     "password-hash": "^1.2.2",
     "q": "^1.4.1",
@@ -28,7 +30,6 @@
     "tmp": "0.0.23"
   },
   "scripts": {
-    "server": "node_modules/.bin/lsc server.ls",
     "start": "node_modules/.bin/gulp --require LiveScript watch",
     "build": "node_modules/.bin/gulp --require LiveScript build"
   },

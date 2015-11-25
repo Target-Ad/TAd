@@ -6,6 +6,11 @@ connectapi = require('./googlecalender.js')
 session = require('express-session');
 pwhash = require('password-hash');
 function Do(query, outputer, page){
+if(typeof(query) == 'object'){ // POST
+	// query.file => file object
+	// query.body => other parameter
+    return output("nanoha");
+}
 var param;
 param = querystring.parse(query);
 //output(JSON.stringify(param));

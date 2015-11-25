@@ -84,6 +84,7 @@ module.exports = {
       var collection;
       collection = db.collection('postAdModels');
       return collection.findOne().then(function(doc){
+        console.log("find in database");
         cb(doc);
         return db.close();
       });
