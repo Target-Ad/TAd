@@ -95,7 +95,7 @@ $(document).ready(function(){
 			page: 'homepage',
 			action: 'login', 	
 			account: account,
-			pw:pw 
+			pw:pw
 		}, function(r){
 			if(r.success === "pw confirm"){
 				var name = account;
