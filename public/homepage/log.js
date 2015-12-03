@@ -126,6 +126,14 @@ $(document).ready(function(){
 		account = $("#regis_usr").val();
 		pw = $("#regis_pw").val();
 		repw = $("#regis_pw_re").val();
+		mail = $('#regis_mail').val();
+        type = $('.select[selected]')
+        if (!account || !pw || !repw || 3 > type.length || 5 < type.length)
+            return alert('error');
+        arr = [];
+        for (i = 0; i < type.length; i++) 
+            arr.push(($(type[i]).attr('id')).replace('type_',''));
+
 		if(repw === pw){
 			console.log("pw ="+pw+"\naccount ="+account);
 			$('#overlay, #regis-block').hide();
@@ -144,6 +152,7 @@ $(document).ready(function(){
 		
 	});
 
+	
 	//在前端頁面處理仍有一些邏輯問題要解決 設法區別再拿到code之後重新整理得狀況
 	function google_login(){
 		var pattern, code, data;

@@ -80,28 +80,35 @@ body{
 #regis-block{
     position: fixed;
     z-index: 100001;
-    width: 30%;
-    height: 60%;
-    border-radius: 50%;
+    width: 36%;
+    height: 80%;
     background-color: white;
     position: fixed;
-    left: 35%;
-    top: 20%;
+    border-top: 5%;
+    left: 32%;
+    top: 12%;
     display: none;
-    border: 20px solid #000000;
-    padding-top: 2%;
+    padding-top: 3%;
+
 }
 
 #regis_btn{
-    font-size: 16px;
-     width: 30%;
-    font-weight: bolder;
-    text-align: center;
-    position: relative;
-    margin-top: 11%;
-    margin: 3% 35%;
-    background-color: #737373;
-    color: ghostwhite;
+    background-color: #FBBC05;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: Arial , Microsoft JhengHei;
+    font-size: 15px;
+    width: 15%;
+    padding: 7px 12px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    margin-left: 43%;
+    margin-right: auto;
+    margin-top: 6%;
 
 }
 
@@ -115,16 +122,60 @@ body{
 }
 
 #regis-block input{
-    width: 61%;
+    width: 50%;
     text-align: center;
     padding: 0% 0;
-    border-radius: 5px;
-    border: 2px solid #737373;
+    border-radius: 0px;
+    border: 1px solid #737373;
     position: relative;
     display: block;
     margin: 0 auto;
     margin-top: 0%;
 }
+
+.reg_word p{
+    margin-left: 25%;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    font-family: Microsoft JhengHei;
+
+}
+.btn_block{
+    text-align: center;
+
+}
+
+
+.select {
+    background-color: #FBBC05;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial , Microsoft JhengHei;
+    font-size: 15px;
+    padding: 7px 12px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 1%;
+}
+.select:hover {
+	background-color:#EA4335;
+}
+.select:active {
+	position:relative;
+	top:1px;
+}
+.select[selected] {
+	background-color:#EA4335;
+}
+
+
+
 
 #upload-block{
     position: fixed;
