@@ -71,7 +71,6 @@ module.exports = {
       return collection.find().limit(6).sort({
         rand: 1
       }).toArray(function(err, doc){
-        console.log(doc);
         cb({
           response: doc
         });

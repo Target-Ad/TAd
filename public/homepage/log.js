@@ -9,6 +9,7 @@ $(document).ready(function(){
 		$("#Upload").show();
 	}
 	else{
+	Cookies.set('login_success','failed');
     $("#log_out").hide();
 	$("#Upload").hide();
     }
@@ -83,6 +84,12 @@ $(document).ready(function(){
 				console.log(response);
 			}
 		});
+		/**
+		$.getJSON('do', serialForm, 
+		function(r){
+			console.log("Ad is uploaded");
+		});
+		**/
 		//Very important line, it disable the page refresh.
 		return false;
 	});    
@@ -152,47 +159,40 @@ $(document).ready(function(){
 		
 	});
 
-	
-	//在前端頁面處理仍有一些邏輯問題要解決 設法區別再拿到code之後重新整理得狀況
-	function google_login(){
+	//處理回傳資料格式+存入DB
+	function fb_login(){
+		console.log(Cookies.get('login_success'));
 		var pattern, code, data;
 		pattern = new RegExp("code=(.*)");
 		isGetCode = pattern.exec(location.href);
 		if (isGetCode) {
 			if(Cookies.get('login_success')!="confirm"){
-				$('#google-login').click(function(){
+				console.log('login failed');
 				$.getJSON('do', {
 					page: 'homepage',
-					action: 'getUsrData',
+					action: 'getFbUsrData',
 					code: isGetCode[1]
 				}, function(r){
 					console.log(r);
-					$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome"+r.name+"</span></div>");
+					console.log(r.name);
+					$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome  "+r.name+"</span></div>");
 					$("#welcome_usr").css("color","#006030").css("font-size","150%");
 					Cookies.set('login_success','confirm',{expires:15, path:'/'});
 					Cookies.set('name',r.name,{expires:15, path:'/'});
 					$("#Register").hide();
 					$("#log_out").show();
 					$("#log_in").hide();
-				});
+					$("#Upload").show();
 				});
 			}
 			else{
 				location.href = "http://luffy.ee.ncku.edu.tw:8451/homepage/homepage.html";
 			}
 		} else {
-			return $('#google-login').click(function(){
-				$.getJSON('do', {
-					page: 'homepage',
-					action: 'getAuthUrl', 
-				}, function(r){
-					console.log("response get from server =\n"+r)
-					location.href = r;
-				});
-			
+			return $('#fb-login').click(function(){
+			      location.href = 'https://www.facebook.com/dialog/oauth?client_id=910359615717780&redirect_uri=http://luffy.ee.ncku.edu.tw:8451/homepage/homepage.html';
 			});
 			}
-	} google_login();
-	
+	} fb_login();
 
 });

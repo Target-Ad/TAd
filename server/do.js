@@ -2,11 +2,12 @@ var querystring, dir, toString$ = {}.toString;
 querystring = require('querystring');
 fs = require('fs');
 usrsys = require('./db-usrsystem.js');
-connectapi = require('./googlecalender.js')
+fbdata = require('./getFbUserData.js');
 session = require('express-session');
 pwhash = require('password-hash');
 function Do(query, outputer, page){
 if(typeof(query) == 'object'){ // POST
+	console.log(query);
 	// query.file => file object
 	// query.body => other parameter
     return output("nanoha");
@@ -30,17 +31,11 @@ switch (param.page) {
 			param.pw = pwhash.generate(param.pw);
 			usrsys.inputUsr({account: param.account, pw:param.pw, postAd: param.postAd});
 			break;
-		case 'getAuthUrl':
-			console.log('in getAuthUrl');
+		case 'getFbUsrData':
+			console.log("getting user data");
 			delete param.action;
 			delete param.page;
-			var credentialUrl;
-			connectapi.getAuthUrl(function(returnUrl){output(JSON.stringify(returnUrl))});
-			break;
-		case 'getUsrData':
-			delete param.action;
-			delete param.page;
-			connectapi.getUsrData(param.code, function(result){output(JSON.stringify(result))});
+			fbdata.getFbUsrData(param.code, function(result){output(result)});
 			break;
 		case 'getInitialData':
 			delete param.action;
@@ -55,7 +50,7 @@ switch (param.page) {
 			usrsys.askForNewAd(function(result){output(JSON.stringify(result))});
 			break;
 		default:
-			output(JSON.stringify({stage:'123default'}));
+			output(JSON.stringify({stage:'default'}));
 			break;
 		}
 		break;

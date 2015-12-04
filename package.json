@@ -15,6 +15,7 @@
     "gulp-livescript": "^2.4.0",
     "jquery-file-upload-middleware": "^0.1.7",
     "livescript": "^1.4.0",
+    "moment": "^2.10.6",
     "mongo-express": "^0.25.0",
     "mongodb": "^2.0.48",
     "mongoose": "^4.2.5",

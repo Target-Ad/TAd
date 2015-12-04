@@ -38,7 +38,6 @@ module.exports =
 		mg-client.connect url, (err, db)->
 			collection = db.collection \postAdModels
 			collection.find!.limit(6).sort({rand:1}).toArray (err, doc)->
-				console.log doc
 				cb {response:doc}
 				db.close!
 	ask-for-new-ad: (cb)->
