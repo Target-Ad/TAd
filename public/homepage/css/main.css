@@ -81,7 +81,7 @@ body{
     position: fixed;
     z-index: 100001;
     width: 36%;
-    height: 80%;
+    height: 74%;
     background-color: white;
     position: fixed;
     border-top: 5%;
@@ -89,11 +89,12 @@ body{
     top: 12%;
     display: none;
     padding-top: 3%;
+    border-radius: 4%;
 
 }
 
 #regis_btn{
-    background-color: #FBBC05;
+    background-color: #6FB5F9;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
@@ -101,15 +102,24 @@ body{
     cursor: pointer;
     color: #FFFFFF;
     font-family: Arial , Microsoft JhengHei;
-    font-size: 15px;
-    width: 15%;
+    font-size: 17px;
+    width: 20%;
     padding: 7px 12px;
     text-decoration: none;
     border: 1px solid transparent;
-    margin-left: 43%;
+    margin-left: 40%;
     margin-right: auto;
-    margin-top: 6%;
+    margin-top: 7%;
 
+}
+
+#regis_btn:hover {
+	background-color:#347ABD;
+}
+
+#regis_btn:active{
+	position:relative;
+	top:2px;
 }
 
 #regis_word{
