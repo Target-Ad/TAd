@@ -15,7 +15,10 @@ $(document).ready(function(){
 	$("#Upload").hide();
 	$("#mypage").hide();
     }
-	$("#Upload").click(function(){ $('#overlay, #upload-block').show();});
+	$("#Upload").click(function(){
+		$('#overlay, #upload-block').show();
+		$('#overlay2, #mypage-block').hide();
+	});
     $('#overlay').click(function(){
         $('#overlay, #upload-block').hide();
     });
