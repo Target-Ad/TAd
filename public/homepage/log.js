@@ -37,8 +37,17 @@ $(document).ready(function(){
     $('#overlay').click(function(){
         $('#overlay, #regis-block').hide();
     });
+	
+	$('#overlay').click(function(){
+		for(var i =0; i<6;i++)
+		{
+			$('#overlay, #content-block-img-'+i).hide();
+			$('#overlay, #content-block-right-'+i).hide();
+		}
+    });
     /*ask database for initial ad to post*/
 	var appendcontent; 
+	var thebody; 
 	$.getJSON('do', {
 		page: 'homepage',
 		action: 'getInitialData',
@@ -46,8 +55,19 @@ $(document).ready(function(){
 	}, function(r){
 		console.log(r);
 		for(var i =0; i<6;i++){
-			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].content+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
+			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/><div class=\"caption\" id=\"more_content-"+i+"\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].content+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
 			$("#box").append(appendcontent);
+			
+			thebody = "<div id=\"content-block-img-"+i+"\" class=\"contents-display\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/></div><div id=\"content-block-right-"+i+"\" class=\"contents-display-right\"><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-block-"+i+"\">"+r.response[i].content+"</p></div></div><div class=\"row\" style=\"padding-top:15px;\"><div class=\"col-md-12\" ><div class=\"comment-container\" ><div class=\"col-md-1\" style=\"width: 50px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-10\"><b>Syuan</b></div><div class=\"col-md-10\" style=\"background-color: #fff; height: 25px;\">It's so good. I can buy what I want !</div></div></div><div class=\"col-md-12\" ><div class=\"col-md-1\" style=\"width: 40px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-11\"><input type=\"text\" class=\"form-control col-md-4\" placeholder=\"please leave a message\"></div></div></div></div>";
+			$("#thebody").append(thebody);
+			
+			$("#more_content-"+i).click(function(){
+				var id =  $(this).attr('id');
+				id = id.split('-');
+				$('#overlay, #content-block-img-'+id[1]).show();
+				$('#overlay, #content-block-right-'+id[1]).show();
+
+			});
 		}
 		$(".discard").click(function(e){
 			var id = $(this).attr("id");

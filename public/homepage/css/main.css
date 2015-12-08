@@ -12,7 +12,7 @@ body{
 }
 
 #overlay{
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -363,6 +363,7 @@ background-color: #E8F1F9;
 
 .contents p{
 margin:0px;
+padding:9px;
 }
 
 
@@ -437,4 +438,58 @@ margin:0px;
 #log_out:active {
 	position:relative;
 	top:1px;
+}
+
+.contents-display {
+	position: fixed;
+    z-index: 100001;
+    width: 41%;
+    height: 80%;
+    background-color: white;
+    border-top: 2%;
+    left: 8%;
+    top: 4%;
+    display: none;
+    border-radius: 4%;
+	padding-top: 2%;
+}
+
+.contents-display img{
+    width: 80%;
+    text-align: center;
+    padding: 0% 0;
+    border-radius: 0px;
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    margin-top: 0%;
+}
+.contents-display-right {
+	position: fixed;
+    z-index: 100001;
+    width: 41%;
+    height: 80%;
+    background-color: white;
+    border-top: 2%;
+    left: 51%;
+    top: 4%;
+    display: none;
+    border-radius: 4%;
+	padding-top: 2%;
+	padding-left: 2%;
+	padding-right: 2%;
+}
+.contents-display-right span{
+    width: 50%;
+    text-align: center;
+    border-radius: 0px;
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    margin-top: 0%;
+}
+
+.comment-container {
+	width: 530px;
+	height: 40px;
 }
