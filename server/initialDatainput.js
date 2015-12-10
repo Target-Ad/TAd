@@ -1,6 +1,9 @@
-var usrsys, uuid, inputAd, i;
+var usrsys, uuid, randomInt, inputAd, i;
 usrsys = require('./db-usrsystem');
 uuid = require('node-uuid');
+randomInt = function(low, high){
+  return Math.floor(Math.random() * (high - low) + low);
+};
 inputAd = [
   {
     _id: uuid.v4(),
@@ -9,7 +12,8 @@ inputAd = [
     tag: ["department store", "新光三越", "discount"],
     discardUser: [],
     keepUser: [],
-    imag: "D"
+    imag: "D",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "星巴克-咖啡好友分享日",
@@ -17,7 +21,8 @@ inputAd = [
     tag: ['starbucks', 'coffee', 'drink', '星巴克', "buy one get one free"],
     discardUser: [],
     keepUser: [],
-    imag: "A"
+    imag: "A",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "85度C",
@@ -25,7 +30,8 @@ inputAd = [
     tag: ['coffee', 'discount', '85度C', 'drink'],
     discardUser: [],
     keepUser: [],
-    imag: "B"
+    imag: "B",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "蘑菇現實輕鬆買",
@@ -33,7 +39,8 @@ inputAd = [
     tag: ['clothe', 'necessary', '蘑菇'],
     discardUser: [],
     keepUser: [],
-    imag: "C"
+    imag: "C",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "7-11",
@@ -41,7 +48,8 @@ inputAd = [
     tag: ["7-11", "ice cream", "霜淇淋", 'discount', 'seven'],
     discardUser: [],
     keepUser: [],
-    imag: "E"
+    imag: "E",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "必勝客披薩",
@@ -49,7 +57,8 @@ inputAd = [
     tag: ['pizza', 'coupon', '必勝客'],
     discardUser: [],
     keepUser: [],
-    imag: "F"
+    imag: "F",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "21世紀",
@@ -57,7 +66,8 @@ inputAd = [
     tag: ['birthday', "21世紀"],
     discardUser: [],
     keepUser: [],
-    imag: "G"
+    imag: "G",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "『OK即時快訊』－本周鋒面報到！",
@@ -65,7 +75,8 @@ inputAd = [
     tag: ["OK", "咖啡", "coffee", "drink", "飲料"],
     discardUser: [],
     keepUser: [],
-    imag: "I"
+    imag: "I",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "伯朗分享日",
@@ -73,7 +84,8 @@ inputAd = [
     tag: ["buy one get one free", "coffee", "咖啡", "伯朗", "飲料", "買一送一"],
     discardUser: [],
     keepUser: [],
-    imag: "J"
+    imag: "J",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "大苑子",
@@ -81,7 +93,8 @@ inputAd = [
     tag: ["大苑子", "中國信託", "第二件半價"],
     discardUser: [],
     keepUser: [],
-    imag: "K"
+    imag: "K",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "7-11",
@@ -89,7 +102,8 @@ inputAd = [
     tag: ["duscount", "7-11", "美樂蒂", "雙星仙子"],
     discardUser: [],
     keepUser: [],
-    imag: "L"
+    imag: "L",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "MisterDonut",
@@ -97,7 +111,8 @@ inputAd = [
     tag: ["MisterDount", "耶誕"],
     discardUser: [],
     keepUser: [],
-    imag: "M"
+    imag: "M",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "摩斯漢堡",
@@ -105,14 +120,16 @@ inputAd = [
     tag: ["摩斯漢堡", "米漢堡"],
     discardUser: [],
     keepUser: [],
-    imag: "O"
+    imag: "O",
+    rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
     topic: "酷聖石冰淇淋",
     content: "酷聖石冰淇淋，限時優惠經典冰淇淋買大送小！",
     tag: ["酷聖石", "coldstone", "買大送小", "ice scream", "冰淇淋"],
     keepUser: [],
-    imag: "P"
+    imag: "P",
+    rnd: randomInt(0, 500)
   }
 ];
 for (i in inputAd) {

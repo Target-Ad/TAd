@@ -47,7 +47,15 @@ switch (param.page) {
 			delete param.acton;
 			delete param.page;
 			console.log("ask for new ad");
-			usrsys.askForNewAd(function(result){output(JSON.stringify(result))});
+			usrsys.askForNewAd(param.usr_id, param.Ad_id, param.type,function(result){output(JSON.stringify(result))});
+			break;
+		case 'getAuthUrl':
+			console.log('in getAuthUrl');
+			delete param.action;
+			delete param.page;
+			var credentialUrl;
+			connectapi.getAuthUrl(function(returnUrl){output(JSON.stringify(returnUrl))});
+			break;
 			break;
 		default:
 			output(JSON.stringify({stage:'default'}));

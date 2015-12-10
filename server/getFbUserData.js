@@ -1,6 +1,7 @@
-var q, https, qs;
+var q, https, dbSys, qs;
 q = require('q');
 https = require('https');
+dbSys = require('./db-usrsystem');
 qs = require('querystring');
 module.exports = {
   getFbUsrData: function(code, cb){
@@ -10,11 +11,15 @@ module.exports = {
       res.on('data', function(d){
         var accessExpireObj, usrDataUrl;
         accessExpireObj = qs.parse(d.toString());
-        usrDataUrl = "https://graph.facebook.com/me?fields=id,name,email&access_token=" + accessExpireObj.access_token;
+        usrDataUrl = "https://graph.facebook.com/me?fields=id,name,email,gender,picture{url},age_range&access_token=" + accessExpireObj.access_token;
+        console.log("access_token = ");
+        console.log(accessExpireObj.access_token);
         return https.get(usrDataUrl, function(res){
           res.on('data', function(d){
+            var usrObj;
             console.log(d.toString());
             cb(d.toString());
+            usrObj = JSON.parse(d.toString());
           });
         });
       });

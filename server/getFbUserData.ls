@@ -1,5 +1,6 @@
 q = require \q
 https = require \https
+db-sys = require \./db-usrsystem
 qs = require \querystring
 module.exports =
 	get-fb-usr-data: (code, cb)!->
@@ -7,10 +8,13 @@ module.exports =
 		https.get accesstoken-url, (res)!->
 			res.on \data, (d)->
 				access-expire-obj = qs.parse d.toString!
-				usr-data-url = "https://graph.facebook.com/me?fields=id,name,email&access_token="+access-expire-obj.access_token
+				usr-data-url = "https://graph.facebook.com/me?fields=id,name,email,gender,picture{url},age_range&access_token="+access-expire-obj.access_token
+				console.log "access_token = "
+				console.log access-expire-obj.access_token
 				https.get usr-data-url, (res)!->
 					res.on \data, (d)!->
 						console.log d.toString!
 						cb d.toString!
+						usr-obj = JSON.parse d.toString!
 		.on \error, (err)!->
 			console.log e.message

@@ -1,11 +1,27 @@
-require! <[mongodb password-hash q]>
+require! <[mongodb password-hash q raccoon]>
+uuid = require \node-uuid
 mg-client = mongodb.MongoClient
 url = \mongodb://team18:73191020@localhost/team18/
+redis-port = 6379
+redis-url = \127.0.0.1
+random-int = (low, high)->
+	Math.floor Math.random!*(high - low)+low
+test-viewed = (usr-id, ad-id)->
+	mg-client.connect url, (err, db)->
+		collection = db.collection \usrModels
+		r = collection.find {$and: [{_id: usr-id},{watch-ad-id: ad-id}]}
+		r.toArray (e, d)->
+			t = d.length
+			if t ==0
+				return 0
+			else
+				return 1
+raccoon.connect redis-port,redis-url
 module.exports =
 	input-usr: (usr)!->
 		mg-client.connect url, (err, db)->
 			console.log "inputing usr"
-			usr <<< {post-ad:[]}
+			usr <<< {_id:uuid.v4!, post-ad:[], watch-ad-id: []}
 			collection = db.collection \usrModels
 			collection.insertOne usr, {w:1}, (err, result)->
 				db.close!
@@ -20,7 +36,10 @@ module.exports =
 					console.log "data get from database "
 					console.log usr-doc
 					if password-hash.verify inputusr.pw, usr-doc.pw
-						cb {success : "pw confirm"}
+						cb-obj = {success : "pw confirm"}
+						cb-obj <<< {_id:usr-doc._id}
+						console.log cb-obj
+						cb cb-obj
 					else
 						cb {error: "pw not match"}
 					db.close!
@@ -40,11 +59,54 @@ module.exports =
 			collection.find!.limit(6).sort({rand:1}).toArray (err, doc)->
 				cb {response:doc}
 				db.close!
-	ask-for-new-ad: (cb)->
+	ask-for-new-ad: (usr-id, Ad-id, type, cb)->
+		mg-client.connect url, (err, db)->
+			ad-collection = db.collection \postAdModels
+			usr-collection = db.collection \usrModels
+			switch type
+			| \discard =>
+				if test-viewed(usr-id, Ad-id)
+					break
+				else
+					usr-collection.update {_id:usr-id}, {$push: {watch-ad-id: Ad-id}}
+					ad-collection.update {_id:Ad-id}, {$push: {discard-user: usr-id}}
+					raccoon.disliked usr-id, Ad-id, ->
+						console.log "user   "+usr-id+"    discard   "+Ad-id
+					break;
+				fallthrough
+			| \keep =>
+				if test-viewed(usr-id, Ad-id)
+					break
+				else
+					usr-collection.update {_id:usr-id}, {$push: {watch-ad-id: Ad-id}}
+					ad-collection.update {_id:Ad-id}, {$push: {keep-user: usr-id}}
+					raccoon.liked usr-id, Ad-id, ->
+						console.log "user   "+usr-id+"    keep    "+Ad-id
+					break
+				fallthrough
+			raccoon.recommendFor usr-id, 1, (r)->
+				console.log "recommend by raccoon"
+				if r === [] or test-viewed(usr-id, r[0]) or err
+					console.log "this ad has been read" 
+					res =ad-collection.find {rnd:{$gte: random-int 0 450}} .sort {rnd:1} .limit 1
+					res.toArray (err, docu)->
+						if err
+							console.error err
+						else
+							console.log docu[0]
+							cb docu[0]
+							db.close!
+				else
+					console.log "in else"
+					console.log r[0]
+					ad-collection.find {_id: r[0]} .toArray (e, d)->
+						console.log d
+						cb d[0]
+	test-db-query: (query, cb)->
 		mg-client.connect url, (err, db)->
 			collection = db.collection \postAdModels
-			collection.findOne! .then (doc)->
-				console.log "find in database"
+			collection.find query .toArray (err, doc)->
+				if err
+					console.error err
 				cb doc
 				db.close!
-

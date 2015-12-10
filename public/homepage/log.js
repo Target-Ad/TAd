@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	AdArray=[];
 	var isLog = Cookies.get('login_success');
 	if(isLog == "confirm"){
 		$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome  "+Cookies.get('name')+"</span></div>");
@@ -46,27 +47,74 @@ $(document).ready(function(){
 	}, function(r){
 		console.log(r);
 		for(var i =0; i<6;i++){
-			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].content+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
+			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div><span id=\"clock-"+i+"\"></span></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].content+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
+			AdArray[i] = r.response[i]._id;
 			$("#box").append(appendcontent);
+			$('#clock-'+i).countdown('2020/10/10 12:34:56')
+			.on('update.countdown', function(event) {
+				var format = '%H:%M:%S';
+				if(event.offset.days > 0) {
+					format = '%-d day%!d ' + format;
+				}
+				if(event.offset.weeks > 0) {
+					format = '%-w week%!w ' + format;
+				}
+				$(this).html(event.strftime(format));
+			})
+			.on('finish.countdown', function(event) {
+				$(this).html('This offer has expired!')
+				.parent().addClass('disabled');
+
+			});
 		}
-		$(".discard").click(function(e){
+		console.log(AdArray);
+		$(".collect").click(function(e){
 			var id = $(this).attr("id");
 			console.log(id);
 			var data;
+			console.log(AdArray);
 			data = {
 				page: 'homepage',
 				action: 'askForNewAd',
-				type: 'discard'
+				type: 'keep',
+				Ad_id: AdArray[id]
 			};
 			if (Cookies.get('login_success' === 'confirm')) {
-			  data.user = Cookies.get('name');
+			  data.account = Cookies.get('name');
+			  data.usr_id = Cookies.get('_id');
 			  }
-
+			console.log(data);
 			$.getJSON('do', data, 
 			function(r){
 				$("#Ad-image-"+id).attr("src", "./postAdImage/"+r.imag+".jpg");
 				$("#Ad-topic-"+id).text(r.topic);
 				$("#Ad-content-"+id).text(r.content);
+				AdArray[id] = r._id;
+			});
+		});
+		$(".discard").click(function(e){
+			var id = $(this).attr("id");
+			console.log(id);
+			console.log(AdArray);
+			var data;
+			data = {
+				page: 'homepage',
+				action: 'askForNewAd',
+				type: 'discard',
+				Ad_id: AdArray[id]
+			};
+			if (Cookies.get('login_success' === 'confirm')) {
+			  data.account = Cookies.get('name');
+			  data.usr_id = Cookies.get('_id');
+			  }
+			console.log(data);
+			$.getJSON('do', data, 
+			function(r){
+				$("#Ad-image-"+id).attr("src", "./postAdImage/"+r.imag+".jpg");
+				$("#Ad-topic-"+id).text(r.topic);
+				$("#Ad-content-"+id).text(r.content);
+				AdArray[id] = r._id;
+				console.log(AdArray);
 			});
 		});
 
@@ -105,6 +153,7 @@ $(document).ready(function(){
 			pw:pw
 		}, function(r){
 			if(r.success === "pw confirm"){
+				console.log(r);
 				var name = account;
 				console.log("pw confirm stage");
 				$('#overlay, #login-block').hide();
@@ -112,6 +161,7 @@ $(document).ready(function(){
 				$("#welcome_usr").css("color","#006030").css("font-size","150%");
 				Cookies.set('login_success','confirm',{expires:15, path:'/'});
 				Cookies.set('name',name,{expires:15, path:'/'});
+				Cookies.set('_id', r._id, {expires:15, path:'/'});
 				$("#Register").hide();
 				$("#log_out").show();
 				$("#log_in").hide();
@@ -177,6 +227,9 @@ $(document).ready(function(){
 					console.log(r.name);
 					$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome  "+r.name+"</span></div>");
 					$("#welcome_usr").css("color","#006030").css("font-size","150%");
+					if(r.picture.data.url){
+						$("#welcome-div").append("<img src=\""+r.picture.data.url+"\"/>");
+					}
 					Cookies.set('login_success','confirm',{expires:15, path:'/'});
 					Cookies.set('name',r.name,{expires:15, path:'/'});
 					$("#Register").hide();

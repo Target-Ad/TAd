@@ -23,6 +23,8 @@
     "node-google-api": "^0.3.0",
     "password-hash": "^1.2.2",
     "q": "^1.4.1",
+    "redis": "^2.4.2",
+    "redis-server": "0.0.1",
     "request": "^2.67.0",
     "sync": "^0.2.5"
   },
