@@ -8,13 +8,18 @@ $(document).ready(function(){
 		$("#log_out").show();
 		$("#Register").hide();
 		$("#Upload").show();
+		$("#mypage").show();
 	}
 	else{
 	Cookies.set('login_success','failed');
     $("#log_out").hide();
 	$("#Upload").hide();
+	$("#mypage").hide();
     }
-	$("#Upload").click(function(){ $('#overlay, #upload-block').show();});
+	$("#Upload").click(function(){
+		$('#overlay, #upload-block').show();
+		$('#overlay2, #mypage-block').hide();
+	});
     $('#overlay').click(function(){
         $('#overlay, #upload-block').hide();
     });
@@ -23,7 +28,17 @@ $(document).ready(function(){
     });		
     var height = $('body').css('height');
     $('#overlay').css('height', height);
+	
+	$("#mypage").click(function(){		
+        $('#overlay2, #mypage-block').show();
+    });		
+    var height = $('body').css('height');
+    $('#overlay2').css('height', height);
     
+	$('#overlay2').click(function(){
+        $('#overlay2, #mypage-block').hide();
+    });
+	   
     $('#overlay').click(function(){
         $('#overlay, #login-block').hide();
     });
@@ -38,8 +53,17 @@ $(document).ready(function(){
     $('#overlay').click(function(){
         $('#overlay, #regis-block').hide();
     });
+	
+	$('#overlay').click(function(){		
+		for(var i =0; i<6;i++)		
+		{		
+			$('#overlay, #content-block-img-'+i).hide();		
+			$('#overlay, #content-block-right-'+i).hide();		
+		}		
+    });
     /*ask database for initial ad to post*/
 	var appendcontent; 
+	var thebody; 
 	$.getJSON('do', {
 		page: 'homepage',
 		action: 'getInitialData',
@@ -47,7 +71,7 @@ $(document).ready(function(){
 	}, function(r){
 		console.log(r);
 		for(var i =0; i<6;i++){
-			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div><span id=\"clock-"+i+"\"></span></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].content+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
+			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/><div class=\"caption\" id=\"more_content-"+i+"\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div><span id=\"clock-"+i+"\"></span></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].content+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
 			AdArray[i] = r.response[i]._id;
 			$("#box").append(appendcontent);
 			$('#clock-'+i).countdown('2020/10/10 12:34:56')
@@ -64,6 +88,15 @@ $(document).ready(function(){
 			.on('finish.countdown', function(event) {
 				$(this).html('This offer has expired!')
 				.parent().addClass('disabled');
+			});
+			thebody = "<div id=\"content-block-img-"+i+"\" class=\"contents-display\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/></div><div id=\"content-block-right-"+i+"\" class=\"contents-display-right\"><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-block-"+i+"\">"+r.response[i].content+"</p></div></div><div class=\"row\" style=\"padding-top:15px;\"><div class=\"col-md-12\" ><div class=\"comment-container\" ><div class=\"col-md-1\" style=\"width: 50px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-10\"><b>Syuan</b></div><div class=\"col-md-10\" style=\"background-color: #fff; height: 25px;\">It's so good. I can buy what I want !</div></div></div><div class=\"col-md-12\" ><div class=\"col-md-1\" style=\"width: 40px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-11\"><input type=\"text\" class=\"form-control col-md-4\" placeholder=\"please leave a message\"></div></div></div></div>";
+			$("#thebody").append(thebody);
+			
+			$("#more_content-"+i).click(function(){
+				var id =  $(this).attr('id');
+				id = id.split('-');
+				$('#overlay, #content-block-img-'+id[1]).show();
+				$('#overlay, #content-block-right-'+id[1]).show();
 
 			});
 		}
@@ -132,12 +165,6 @@ $(document).ready(function(){
 				console.log(response);
 			}
 		});
-		/**
-		$.getJSON('do', serialForm, 
-		function(r){
-			console.log("Ad is uploaded");
-		});
-		**/
 		//Very important line, it disable the page refresh.
 		return false;
 	});    
@@ -209,6 +236,7 @@ $(document).ready(function(){
 		
 	});
 
+	
 	//處理回傳資料格式+存入DB
 	function fb_login(){
 		console.log(Cookies.get('login_success'));
@@ -247,5 +275,25 @@ $(document).ready(function(){
 			});
 			}
 	} fb_login();
+	
+	var logic = function( currentDateTime ){
+    // 'this' is jquery object datetimepicker
+    if( currentDateTime.getDay()==6 ){
+    this.setOptions({
+      minTime:'11:00'
+    });
+    }else
+    this.setOptions({
+      minTime:'8:00'
+    });
+    };
+    $('#datetimepicker1').datetimepicker({
+    onChangeDateTime:logic,
+    onShow:logic
+    });
+	$('#datetimepicker2').datetimepicker({
+    onChangeDateTime:logic,
+    onShow:logic
+    });
 
 });
