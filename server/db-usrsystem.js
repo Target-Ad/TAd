@@ -1,4 +1,5 @@
-var mongodb, passwordHash, q, raccoon, uuid, mgClient, url, redisPort, redisUrl, randomInt, testViewed;
+var fs, mongodb, passwordHash, q, raccoon, uuid, mgClient, url, redisPort, redisUrl, randomInt, testViewed;
+fs = require('fs');
 mongodb = require('mongodb');
 passwordHash = require('password-hash');
 q = require('q');
@@ -89,16 +90,40 @@ module.exports = {
       }
     });
   },
-  postAd: function(inputAd, cb){
-    console.log("posting ad");
+  postAd: function(adInform, cb){
+    console.log(adInform);
     return mgClient.connect(url, function(err, db){
-      var collection;
+      var collection, imagName;
       collection = db.collection('postAdModels');
-      return collection.insertOne(inputAd, {
-        w: 1
-      }, function(err, result){
-        cb(result);
-        return db.close();
+      imagName = uuid.v4();
+      return fs.rename(adInform.path, "public/homepage/postAdImage/" + imagName + ".jpg", function(){
+        var i;
+        delete adInform.path;
+        adInform.period = [];
+        if (typeof adInform.start_time === "string" || typeof adInform.end_time === "string") {
+          adInform.period.push({
+            start: adInform.start_time,
+            end: adInform.end_time
+          });
+        } else {
+          for (i in adInform.start_time) {
+            adInform.period.push({
+              start: adInform.start_time[i],
+              end: adInform.end_time[i]
+            });
+          }
+        }
+        adInform.imag = imagName;
+        adInform._id = uuid.v4();
+        adInform.rnd = randomInt(0, 500);
+        delete adInform.start_time;
+        delete adInform.end_time;
+        return collection.insertOne(adInform, {
+          w: 1
+        }, function(err, result){
+          cb(result);
+          return db.close();
+        });
       });
     });
   },

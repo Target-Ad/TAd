@@ -7,10 +7,13 @@ session = require('express-session');
 pwhash = require('password-hash');
 function Do(query, outputer, page){
 if(typeof(query) == 'object'){ // POST
-	console.log(query);
+	console.log(query.file);
+	console.log(query.body);
+	adInform = {topic: query.body.upload_activity, shop: query.body.upload_shop, place: query.body.upload_location, discription: query.body.discription, start_time: query.body.start_time, end_time: query.body.end_time, type:query.body.type, path: query.file.path};
+	usrsys.postAd(adInform,function(result){output(JSON.stringify(result))});
 	// query.file => file object
 	// query.body => other parameter
-    return output("nanoha");
+    //return output("nanoha");
 }
 var param;
 param = querystring.parse(query);

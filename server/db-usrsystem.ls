@@ -1,4 +1,4 @@
-require! <[mongodb password-hash q raccoon]>
+require! <[fs mongodb password-hash q raccoon]>
 uuid = require \node-uuid
 mg-client = mongodb.MongoClient
 url = \mongodb://team18:73191020@localhost/team18/
@@ -46,13 +46,25 @@ module.exports =
 			else
 				cb {error: "pw not match"}
 				db.close!
-	post-ad: (input-ad, cb)->
-		console.log "posting ad"
+	post-ad: (ad-inform, cb)->
+		console.log ad-inform
 		mg-client.connect url, (err, db)->
 			collection = db.collection \postAdModels
-			collection.insertOne input-ad, {w:1}, (err, result)->
-				cb result
-				db.close!
+			imag-name = uuid.v4!
+			fs.rename ad-inform.path, "public/homepage/postAdImage/"+imag-name+".jpg", ->
+				delete ad-inform.path
+				ad-inform.period = []
+				if typeof ad-inform.start_time == "string" or typeof ad-inform.end_time == "string"
+					ad-inform.period.push {start: ad-inform.start_time, end: ad-inform.end_time}
+				else
+					for i of ad-inform.start_time
+						ad-inform.period.push {start: ad-inform.start_time[i], end: ad-inform.end_time[i]}
+				ad-inform <<< {imag: imag-name, _id:uuid.v4!, rnd: random-int(0, 500)}
+				delete ad-inform.start_time
+				delete ad-inform.end_time
+				collection.insertOne ad-inform, {w:1}, (err, result)->
+					cb result
+					db.close!
 	get-initial-data: (cb)->
 		mg-client.connect url, (err, db)->
 			collection = db.collection \postAdModels

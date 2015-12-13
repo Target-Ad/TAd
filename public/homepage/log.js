@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	AdArray=[];
+	period = 0;
 	var isLog = Cookies.get('login_success');
 	if(isLog == "confirm"){
 		$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome  "+Cookies.get('name')+"</span></div>");
@@ -71,10 +72,10 @@ $(document).ready(function(){
 	}, function(r){
 		console.log(r);
 		for(var i =0; i<6;i++){
-			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/><div class=\"caption\" id=\"more_content-"+i+"\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div><span id=\"clock-"+i+"\"></span></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].content+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
+			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/><div class=\"caption\" id=\"more_content-"+i+"\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div><span id=\"clock-"+i+"\"></span></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].discription+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
 			AdArray[i] = r.response[i]._id;
 			$("#box").append(appendcontent);
-			$('#clock-'+i).countdown('2020/10/10 12:34:56')
+			$('#clock-'+i).countdown(r.response[i].period[0].start)
 			.on('update.countdown', function(event) {
 				var format = '%H:%M:%S';
 				if(event.offset.days > 0) {
@@ -86,10 +87,10 @@ $(document).ready(function(){
 				$(this).html(event.strftime(format));
 			})
 			.on('finish.countdown', function(event) {
-				$(this).html('This offer has expired!')
+				$(this).html("Already Expired")
 				.parent().addClass('disabled');
 			});
-			thebody = "<div id=\"content-block-img-"+i+"\" class=\"contents-display\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/></div><div id=\"content-block-right-"+i+"\" class=\"contents-display-right\"><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-block-"+i+"\">"+r.response[i].content+"</p></div></div><div class=\"row\" style=\"padding-top:15px;\"><div class=\"col-md-12\" ><div class=\"comment-container\" ><div class=\"col-md-1\" style=\"width: 50px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-10\"><b>Syuan</b></div><div class=\"col-md-10\" style=\"background-color: #fff; height: 25px;\">It's so good. I can buy what I want !</div></div></div><div class=\"col-md-12\" ><div class=\"col-md-1\" style=\"width: 40px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-11\"><input type=\"text\" class=\"form-control col-md-4\" placeholder=\"please leave a message\"></div></div></div></div>";
+			thebody = "<div id=\"content-block-img-"+i+"\" class=\"contents-display\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/></div><div id=\"content-block-right-"+i+"\" class=\"contents-display-right\"><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-block-"+i+"\">"+r.response[i].discription+"</p></div></div><div class=\"row\" style=\"padding-top:15px;\"><div class=\"col-md-12\" ><div class=\"comment-container\" ><div class=\"col-md-1\" style=\"width: 50px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-10\"><b>Syuan</b></div><div class=\"col-md-10\" style=\"background-color: #fff; height: 25px;\">It's so good. I can buy what I want !</div></div></div><div class=\"col-md-12\" ><div class=\"col-md-1\" style=\"width: 40px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-11\"><input type=\"text\" class=\"form-control col-md-4\" placeholder=\"please leave a message\"></div></div></div></div>";
 			$("#thebody").append(thebody);
 			
 			$("#more_content-"+i).click(function(){
@@ -153,7 +154,7 @@ $(document).ready(function(){
 
 	});
 	$('#uploadForm').submit(function() {
-		$("#status").empty().text("File is uploading...");
+		period = 0;
 		$(this).ajaxSubmit({
 
 			error: function(xhr) {
@@ -161,7 +162,6 @@ $(document).ready(function(){
 			},
 
 			success: function(response) {
-				$("#status").empty().text(response);
 				console.log(response);
 			}
 		});
@@ -295,5 +295,9 @@ $(document).ready(function(){
     onChangeDateTime:logic,
     onShow:logic
     });
+	$("#time-plus").click(function(){
+		$("#period-"+period).append("<div id = \"period-"+(period+1)+"\" class=\"period\"><p>*start from:</p><input id=\"datetimepicker1\" type=\"text\" name=\"start_time\"><p>*end at</P><input id=\"datetimepicker2\" type=\"text\" name=\"end_time\"></div>");
+		period++;
+	});
 
 });
