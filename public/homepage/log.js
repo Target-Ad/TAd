@@ -67,7 +67,9 @@ $(document).ready(function(){
 	}, function(r){
 		console.log(r);
 		for(var i =0; i<6;i++){
-			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/><div class=\"caption\" id=\"more_content-"+i+"\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div><span id=\"clock-"+i+"\"></span></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].discription+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
+			rough = r.response[i].discription.substring(0, 20);
+			console.log(rough);
+			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\" id=\"thumbnail-"+i+"\"><div id=\"image-container-"+i+"\" class = \"Ad-image\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/></div><div class=\"caption\" id=\"more_content-"+i+"\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div><span id=\"clock-"+i+"\"></span></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].discription.substring(0, 20)+".... read more"+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
 			AdArray[i] = r.response[i]._id;
 			$("#box").append(appendcontent);
 			$('#clock-'+i).countdown(r.response[i].period[0].start)
@@ -115,9 +117,11 @@ $(document).ready(function(){
 			console.log(data);
 			$.getJSON('do', data, 
 			function(r){
-				$("#Ad-image-"+id).attr("src", "./postAdImage/"+r.imag+".jpg");
+				$("#image-container-"+id).remove();
+				$("#Ad-image-"+id).remove();
+				$("<div id=\"image-container-"+id+"\" class = \"Ad-image\"><img id=\"Ad-image-"+id+"\" src='./postAdImage/"+r.imag+".jpg'alt=\"\"/></div>").insertBefore("#more_content-"+id);
 				$("#Ad-topic-"+id).text(r.topic);
-				$("#Ad-content-"+id).text(r.content);
+				$("#Ad-content-"+id).text(r.discription);
 				AdArray[id] = r._id;
 			});
 		});
@@ -139,11 +143,12 @@ $(document).ready(function(){
 			console.log(data);
 			$.getJSON('do', data, 
 			function(r){
-				$("#Ad-image-"+id).attr("src", "./postAdImage/"+r.imag+".jpg");
+				$("#image-container-"+id).remove();
+				$("#Ad-image-"+id).remove();
+				$("<div id=\"image-container-"+id+"\" class = \"Ad-image\"><img id=\"Ad-image-"+id+"\" src='./postAdImage/"+r.imag+".jpg'alt=\"\"/></div>").insertBefore("#more_content-"+id);
 				$("#Ad-topic-"+id).text(r.topic);
-				$("#Ad-content-"+id).text(r.content);
+				$("#Ad-content-"+id).text(r.discription);
 				AdArray[id] = r._id;
-				console.log(AdArray);
 			});
 		});
 
@@ -294,7 +299,7 @@ $(document).ready(function(){
     onShow:logic
     });
 	$("#time-plus").click(function(){
-		$("#period-"+period).append("<div id = \"period-"+(period+1)+"\" class=\"period\"><p>*start from:</p><input id=\"datetimepicker1\" type=\"text\" name=\"start_time\"><p>*end at</P><input id=\"datetimepicker2\" type=\"text\" name=\"end_time\"></div>");
+		$("#period-"+period).append("<div id = \"period-"+(period+1)+"\" class=\"period\"><input class= \"from\" id=\"datetimepicker1\" type=\"text\" name=\"start_time\">~ <input class=\"end\" id=\"datetimepicker2\" type=\"text\" name=\"end_time\"></div>");
 		period++;
 	});
 

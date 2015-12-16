@@ -46,6 +46,14 @@ module.exports =
 			else
 				cb {error: "pw not match"}
 				db.close!
+	init-post-ad: (ad-inform, cb)->
+		console.log ad-inform
+		mg-client.connect url, (err, db)->
+			collection = db.collection \postAdModels
+			imag-name = uuid.v4!
+			collection.insertOne ad-inform, {w:1}, (err, result)->
+				cb result
+				db.close!
 	post-ad: (ad-inform, cb)->
 		console.log ad-inform
 		mg-client.connect url, (err, db)->

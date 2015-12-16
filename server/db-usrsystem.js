@@ -90,6 +90,20 @@ module.exports = {
       }
     });
   },
+  initPostAd: function(adInform, cb){
+    console.log(adInform);
+    return mgClient.connect(url, function(err, db){
+      var collection, imagName;
+      collection = db.collection('postAdModels');
+      imagName = uuid.v4();
+      return collection.insertOne(adInform, {
+        w: 1
+      }, function(err, result){
+        cb(result);
+        return db.close();
+      });
+    });
+  },
   postAd: function(adInform, cb){
     console.log(adInform);
     return mgClient.connect(url, function(err, db){
