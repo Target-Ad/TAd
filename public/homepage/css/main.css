@@ -79,6 +79,7 @@ body{
     margin: 8% 35%;
     background-color: #737373;
     color: ghostwhite;
+    border: 1px solid transparent;
 }
 
 
@@ -87,7 +88,7 @@ body{
     position: fixed;
     z-index: 100001;
     width: 36%;
-    height: 80%;
+    height: 74%;
     background-color: white;
     position: fixed;
     border-top: 5%;
@@ -95,11 +96,12 @@ body{
     top: 12%;
     display: none;
     padding-top: 3%;
+    border-radius: 10px;
 
 }
 
 #regis_btn{
-    background-color: #FBBC05;
+    background-color: #77C7FD;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
@@ -115,8 +117,22 @@ body{
     margin-left: 43%;
     margin-right: auto;
     margin-top: 6%;
+    
 
 }
+
+
+#regis_btn:hover {
+	background-color:#4B9BD2;
+    color: #ffffff;
+    
+}
+#regis_btn:active {
+	position:relative;
+	top:4px;
+}
+
+
 
 #regis_word{
     font-size: 17px;
@@ -243,7 +259,6 @@ body{
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    border: 1px solid #ffaa22;
     display: inline-block;
     cursor: pointer;
     color:#FFFFFF;;
@@ -253,7 +268,8 @@ body{
     margin-top: 5px;
     text-decoration: none;
     text-shadow: 0px 1px 0px #ffee66;
-  width: 50px;
+     width: 50px;
+     border: 1px solid transparent;
  
 }
 #Register:hover {
@@ -283,6 +299,7 @@ body{
     text-decoration: none;
     text-shadow: 0px 1px 0px #ffee66;
     width: 50px;
+    border: 1px solid transparent;
 
 }
 #log_in:hover {
@@ -336,6 +353,7 @@ float: right;
     text-decoration: none;
     text-shadow: 0px 0px 0px #FFFFFF;
     width: 50px;
+    border: 1px solid transparent;
 
 }
 
@@ -413,25 +431,28 @@ padding:9px;
 }
 
 #log_out {
-    background-color:#FFE74E;
+
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    border-radius: 10px;
-    border: 1px solid #ffaa22;
+    border-radius: 9px;
+    border: 0px solid rgba(255, 255, 255, 0);
     display: inline-block;
     cursor: pointer;
-    color:#FFFFFF;;
+    color: #FFFFFF;
     font-family: Arial;
-    font-size: 12px;
-    padding-top: 8px;
-    margin-top: 5px;
+    font-size: 2px;
+    padding-top: -3px;
+    margin-top: 3px;
     text-decoration: none;
-    text-shadow: 0px 1px 0px #ffee66;
-  width: 50px;
- 
+    text-shadow: 0px 1px 0px #E4DDA2;
+    width: 50px;
+    height: 38px;
+    
+    
 }
+
 #log_out:hover {
-	background-color:#ffab23;
+	background-color:rgb(17, 57, 84);
     color: #ffffff;
     
 }
@@ -446,7 +467,7 @@ padding:9px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    border: 1px solid #ffaa22;
+    border: 1px solid transparent;
     display: inline-block;
     cursor: pointer;
     color:#FFFFFF;;
@@ -457,6 +478,7 @@ padding:9px;
     text-decoration: none;
     text-shadow: 0px 1px 0px #ffee66;
     width: 80px;
+    
  
 }
 #mypage:hover {
@@ -536,4 +558,62 @@ padding:9px;
 .comment-container {
 	width: 530px;
 	height: 40px;
+}
+
+
+#btn_main{
+    background-color:#FFE74E;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: 1px solid #ffaa22;
+    display: inline-block;
+    cursor: pointer;
+    color:#FFFFFF;;
+    font-family: Arial;
+    font-size: 12px;
+    padding-top: 8px;
+    margin-top: 5px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffee66;
+    width: 80px;
+    border: 1px solid transparent;
+}
+
+
+
+#li_col{
+cursor: pointer;
+color: rgb(243, 69, 69);
+font-weight: bold;    
+margin-top: 5px;
+}
+
+#li_pos{
+cursor: pointer;
+color: #F35313;
+font-weight: bold;    
+margin-top: 5px;
+}
+
+#li_cal{
+cursor: pointer;
+color: #1A1729;
+font-weight: bold;    
+margin-top: 5px;
+}
+
+#li_set{
+cursor: pointer;
+color: #1A1729;
+font-weight: bold;    
+margin-top: 5px;
+}
+
+
+#li_col:hover, #li_pos:hover, #li_cal:hover ,#li_set:hover {
+   background-color: rgb(17, 57, 84);
+    color: ghostwhite;
+    height: 30px;
+    border-radius: 3%
 }

@@ -1,9 +1,12 @@
 $(document).ready(function(){
 	AdArray=[];
 	period = 0;
+	$('#userpage').hide();
+	$('#btn_main').hide();
+	$("#mypage").hide();
 	var isLog = Cookies.get('login_success');
 	if(isLog == "confirm"){
-		$(".navbar-fixed-top").append("<div class=\"ui label\" id = \"welcome-div\"><i class=\"user icon\"></i><span id=\"welcome_usr\">welcome  "+Cookies.get('name')+"</span></div>");
+		
 		$("#welcome_usr").css("color","#006030").css("font-size","150%");
 		$("#log_in").hide();
 		$("#log_out").show();
@@ -15,7 +18,6 @@ $(document).ready(function(){
 	Cookies.set('login_success','failed');
     $("#log_out").hide();
 	$("#Upload").hide();
-	$("#mypage").hide();
     }
 	$("#Upload").click(function(){
 		$('#overlay, #upload-block').show();
@@ -30,15 +32,8 @@ $(document).ready(function(){
     var height = $('body').css('height');
     $('#overlay').css('height', height);
 	
-	$("#mypage").click(function(){		
-        $('#overlay2, #mypage-block').show();
-    });		
-    var height = $('body').css('height');
-    $('#overlay2').css('height', height);
-    
-	$('#overlay2').click(function(){
-        $('#overlay2, #mypage-block').hide();
-    });
+			
+	
 	   
     $('#overlay').click(function(){
         $('#overlay, #login-block').hide();
@@ -193,6 +188,7 @@ $(document).ready(function(){
 				$("#log_out").show();
 				$("#log_in").hide();
 				$("#Upload").show();
+				$("#mypage").show();
 			}		
 			console.log(r);
 		});
@@ -204,6 +200,8 @@ $(document).ready(function(){
 		$("#log_in").show();
 		$("#log_out").hide();
 		$("#Upload").hide();
+		$('#mypage').hide();
+		$('#userpage').hide();
 	});
 	$("#regis_btn").click(function(e){
 		e.preventDefault();
