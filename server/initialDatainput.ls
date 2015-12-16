@@ -56,6 +56,7 @@ input-ad =
     rnd:random-int 0 500
   * _id: uuid.v4!
     topic: "必勝客披薩"
+    place: "全台每一間必勝客"
     discription: "歡樂吧平日優惠券--出示再享9折"
     tag: [\pizza \coupon \必勝客]
     discard-user:[]
@@ -70,6 +71,7 @@ input-ad =
     discard-user:[]
     keep-user:[]
     imag:"G"
+    period:[{start:"2015/11/01 12:00", end:"2015/11/30 12:00"}]
     rnd:random-int 0 500
   * _id: uuid.v4!
     topic: "『OK即時快訊』－本周鋒面報到！"
@@ -78,6 +80,7 @@ input-ad =
     discard-user:[]
     keep-user:[]
     imag:"I"
+    period:[{start:"2015/11/23 12:00", end:"2015/11/25 12:00"}]
     rnd:random-int 0 500
   * _id: uuid.v4!
     topic: "伯朗分享日"
@@ -86,6 +89,7 @@ input-ad =
     discard-user:[]
     keep-user:[]
     imag:"J"
+    period:[{start:"2015/11/23 00:00", end:"2015/11/24 00:00"}, {start:"2015/11/30 00:00", end:"2015/12/01 00:00"}]
     rnd:random-int 0 500
   * _id: uuid.v4!
     topic: "大苑子"
@@ -94,6 +98,7 @@ input-ad =
     discard-user:[]
     keep-user:[]
     imag:"K"
+    {start:"2015/12/14 12:00", end:"2015/01/21 12:00"}
     rnd:random-int 0 500
   * _id: uuid.v4!
     topic: "7-11"
@@ -103,6 +108,7 @@ input-ad =
     keep-user:[]
     imag:"L"
     rnd:random-int 0 500
+    {start:"2015/11/23 12:00", end:"2015/11/30 12:00"}
   * _id: uuid.v4!
     topic: "MisterDonut"
     discription: "Mister Donut報好康~歡慶耶誕 百分好禮 耶誕5Q  兩盒只要100元唷!"
@@ -110,6 +116,7 @@ input-ad =
     discard-user:[]
     keep-user:[]
     imag:"M"
+    {start:"2015/11/23 12:00", end:"2015/11/30 12:00"}
     rnd:random-int 0 500
   * _id: uuid.v4!
     topic: "摩斯漢堡"
@@ -118,6 +125,7 @@ input-ad =
     discard-user:[]
     keep-user:[]
     imag:"O"
+    {start:"2015/11/23 12:00", end:"2015/11/30 12:00"}
     rnd:random-int 0 500
   * _id: uuid.v4!
     topic: "酷聖石冰淇淋"
@@ -125,9 +133,10 @@ input-ad =
     tag:["酷聖石" "coldstone" "買大送小" "ice scream" "冰淇淋"]
     keep-user:[]
     imag:"P"
+    {start:"2015/11/23 12:00", end:"2015/11/30 12:00"}
     rnd:random-int 0 500
     
 for i of input-ad
-  usrsys.post-ad input-ad[i], (r)->
+  usrsys.init-post-ad input-ad[i], (r)->
     console.log r
 #vi:tw:2

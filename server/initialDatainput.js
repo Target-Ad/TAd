@@ -79,6 +79,7 @@ inputAd = [
   }, {
     _id: uuid.v4(),
     topic: "必勝客披薩",
+    place: "全台每一間必勝客",
     discription: "歡樂吧平日優惠券--出示再享9折",
     tag: ['pizza', 'coupon', '必勝客'],
     discardUser: [],
@@ -97,6 +98,10 @@ inputAd = [
     discardUser: [],
     keepUser: [],
     imag: "G",
+    period: [{
+      start: "2015/11/01 12:00",
+      end: "2015/11/30 12:00"
+    }],
     rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
@@ -106,6 +111,10 @@ inputAd = [
     discardUser: [],
     keepUser: [],
     imag: "I",
+    period: [{
+      start: "2015/11/23 12:00",
+      end: "2015/11/25 12:00"
+    }],
     rnd: randomInt(0, 500)
   }, {
     _id: uuid.v4(),
@@ -115,55 +124,93 @@ inputAd = [
     discardUser: [],
     keepUser: [],
     imag: "J",
+    period: [
+      {
+        start: "2015/11/23 00:00",
+        end: "2015/11/24 00:00"
+      }, {
+        start: "2015/11/30 00:00",
+        end: "2015/12/01 00:00"
+      }
+    ],
     rnd: randomInt(0, 500)
-  }, {
-    _id: uuid.v4(),
-    topic: "大苑子",
-    discription: "好康優惠報你知((o(^_^)o))即日起至01/21(四)前至全台7-11 中國信託ATM交易就可以列印【紫米紅豆(小杯)第二件半價】酷碰券唷!",
-    tag: ["大苑子", "中國信託", "第二件半價"],
-    discardUser: [],
-    keepUser: [],
-    imag: "K",
-    rnd: randomInt(0, 500)
-  }, {
-    _id: uuid.v4(),
-    topic: "7-11",
-    discription: "【美樂蒂與雙星仙子40周年展 限時87折up】最萌的美樂蒂與雙星仙子歡慶40周年，限定聯名款甜蜜親親系列新上市，快來ibon mart挑選吧！",
-    tag: ["duscount", "7-11", "美樂蒂", "雙星仙子"],
-    discardUser: [],
-    keepUser: [],
-    imag: "L",
-    rnd: randomInt(0, 500)
-  }, {
-    _id: uuid.v4(),
-    topic: "MisterDonut",
-    discription: "Mister Donut報好康~歡慶耶誕 百分好禮 耶誕5Q  兩盒只要100元唷!",
-    tag: ["MisterDount", "耶誕"],
-    discardUser: [],
-    keepUser: [],
-    imag: "M",
-    rnd: randomInt(0, 500)
-  }, {
-    _id: uuid.v4(),
-    topic: "摩斯漢堡",
-    discription: "從明天開始，暖暖的西京燒比目魚珍珠堡，搭配料多好喝的豚汁蔬菜湯，只要百元喔！",
-    tag: ["摩斯漢堡", "米漢堡"],
-    discardUser: [],
-    keepUser: [],
-    imag: "O",
-    rnd: randomInt(0, 500)
-  }, {
-    _id: uuid.v4(),
-    topic: "酷聖石冰淇淋",
-    discription: "酷聖石冰淇淋，限時優惠經典冰淇淋買大送小！",
-    tag: ["酷聖石", "coldstone", "買大送小", "ice scream", "冰淇淋"],
-    keepUser: [],
-    imag: "P",
-    rnd: randomInt(0, 500)
-  }
+  }, [
+    {
+      _id: uuid.v4(),
+      topic: "大苑子",
+      discription: "好康優惠報你知((o(^_^)o))即日起至01/21(四)前至全台7-11 中國信託ATM交易就可以列印【紫米紅豆(小杯)第二件半價】酷碰券唷!",
+      tag: ["大苑子", "中國信託", "第二件半價"],
+      discardUser: [],
+      keepUser: [],
+      imag: "K"
+    }, {
+      start: "2015/12/14 12:00",
+      end: "2015/01/21 12:00"
+    }, {
+      rnd: randomInt(0, 500)
+    }
+  ], [
+    {
+      _id: uuid.v4(),
+      topic: "7-11",
+      discription: "【美樂蒂與雙星仙子40周年展 限時87折up】最萌的美樂蒂與雙星仙子歡慶40周年，限定聯名款甜蜜親親系列新上市，快來ibon mart挑選吧！",
+      tag: ["duscount", "7-11", "美樂蒂", "雙星仙子"],
+      discardUser: [],
+      keepUser: [],
+      imag: "L",
+      rnd: randomInt(0, 500)
+    }, {
+      start: "2015/11/23 12:00",
+      end: "2015/11/30 12:00"
+    }
+  ], [
+    {
+      _id: uuid.v4(),
+      topic: "MisterDonut",
+      discription: "Mister Donut報好康~歡慶耶誕 百分好禮 耶誕5Q  兩盒只要100元唷!",
+      tag: ["MisterDount", "耶誕"],
+      discardUser: [],
+      keepUser: [],
+      imag: "M"
+    }, {
+      start: "2015/11/23 12:00",
+      end: "2015/11/30 12:00"
+    }, {
+      rnd: randomInt(0, 500)
+    }
+  ], [
+    {
+      _id: uuid.v4(),
+      topic: "摩斯漢堡",
+      discription: "從明天開始，暖暖的西京燒比目魚珍珠堡，搭配料多好喝的豚汁蔬菜湯，只要百元喔！",
+      tag: ["摩斯漢堡", "米漢堡"],
+      discardUser: [],
+      keepUser: [],
+      imag: "O"
+    }, {
+      start: "2015/11/23 12:00",
+      end: "2015/11/30 12:00"
+    }, {
+      rnd: randomInt(0, 500)
+    }
+  ], [
+    {
+      _id: uuid.v4(),
+      topic: "酷聖石冰淇淋",
+      discription: "酷聖石冰淇淋，限時優惠經典冰淇淋買大送小！",
+      tag: ["酷聖石", "coldstone", "買大送小", "ice scream", "冰淇淋"],
+      keepUser: [],
+      imag: "P"
+    }, {
+      start: "2015/11/23 12:00",
+      end: "2015/11/30 12:00"
+    }, {
+      rnd: randomInt(0, 500)
+    }
+  ]
 ];
 for (i in inputAd) {
-  usrsys.postAd(inputAd[i], fn$);
+  usrsys.initPostAd(inputAd[i], fn$);
 }
 function fn$(r){
   return console.log(r);
