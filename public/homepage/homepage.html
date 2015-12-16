@@ -10,6 +10,9 @@
     <meta name="author" content="">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="js/js.cookie.js"></script>
+	<script src="jquery-serialize-object.js"></script>
+	<script src="moment.js"></script>
+	<script src="jquery.countdown.min.js"></script>
 	<title>Homepage</title>
 
     <!-- Bootstrap Core CSS -->
@@ -27,64 +30,132 @@
     <link href="css/input.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
 	<link href="css/treeMenu.css" rel="stylesheet">
+    
+    <link rel="stylesheet" type="text/css" href="jquery.datetimepicker.css">
+    <script src="jquery.datetimepicker.full.min.js"></script>
+    
+
+   
 </head>
 
-<body>
+<body id="thebody">
+	<div id="fb-root"></div>
+	<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1623688894561401',
+      xfbml      : true,
+      version    : 'v2.5'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+	
     <div id='overlay'></div>
+ 
     <div id='login-block'>
         <span id="login_word" style="color:red;" >Account:</span>
         <input type="text" id="login_usr">
         <span id="login_word" style="color:orange;">Password:</span>
         <input type="password" id="login_pw" >
 		<button class="ui button" id="login_btn">Login</button>
-		<button class ="ui teal button" id ="google-login">
-			Google Login
+		<button class ="ui teal button" id ="fb-login">
+			Facebook Login
 		</button>
-	 
-    </div>
-        <div id='regis-block'>
-        <span id="regis_word" style="color:red;" >Account:</span>
-        <input type="text" id="regis_usr">
-        <span id="regis_word" style="color:orange;">Password:</span>
-        <input type="password" id="regis_pw" >
-         <span id="regis_word" style="color:orange;">Type your password again:</span>
-        <input type="password" id="regis_pw_re" >
-          <span id="regis_word" style="color:orange;">Email:</span>
-        <input type="text" id="regis_mail" >
-         <button class="ui button" id="regis_btn">Submit</button>
-	 
     </div>
     
-    <div id='upload-block'>
+    <div id='regis-block' class="reg_word">
+        <p>*帳號：</p>
+        <input type="text" id="regis_usr">
+        <p>*密碼：</p>
+        <input type="password" id="regis_pw" >
+        <p>*再次輸入密碼：</p>
+        <input type="password" id="regis_pw_re" >
+        <p>Email：</p>
+        <input type="text" id="regis_mail" >
+        <p>*選擇有興趣的類別(3~5 項)：</p> 
+        <div class="btn_block">
+        <button class="select" id="type_food">食物</button>   
+        <button class="select" id="type_tech">科技</button>  
+        <button class="select" id="type_cloth">服飾</button>  
+        <button class="select" id="type_art">藝術</button>  
+        <button class="select" id="type_traffic">交通</button>  
+        </div>
+        <div class="btn_block">
+        <button class="select" id="type_travel">旅遊</button>  
+        <button class="select" id="type_design">設計</button>  
+        <button class="select" id="type_Home">家居</button>  
+        <button class="select" id="type_game">遊戲</button>  
+        <button class="select" id="type_pet">寵物</button> 
+        </div>
+        <button id="regis_btn">Submit</button>
+    </div>
+    
+    <div id='upload-block' class="reg_word">
 		<form id="uploadForm"
 			enctype="multipart/form-data"
 			action="/homepage/do"
 			method="post">
-			<span id="upload_word" style="color:red;" >Activity:</span>
+			<p>*活動名稱:</p>
 			<input type="text" id="upload_activity" name="upload_activity">
-			<span id="upload_word" style="color:orange;">Shop:</span>
+			<p>*店家名稱:</p>
 			<input type="text" id="upload_shop" name="upload_shop">
-			<span id="upload_word" style="color:red;">Lacation:</span>
+			<p>*地點:</p>
 			<input type="text" id="upload_location" name="upload_location">
-			<span id="upload_word" style="color:orange;">Time:</span>
-			<input type="text" id="upload_time" name="upload_time">
-			<span id="upload_word" style="color:red;">Image:</span>
-			<input type="file" name="userPhoto" />
-			<input type="submit" value="Upload Image" name="submit">
-			<span id = "status"></span>
+			<div id="period-block">
+				<div id = "period-0" class="period">
+					<p>*period:</p>
+					<input class="from" id="datetimepicker1" type="text" name="start_time">~
+					<input class="end" id="datetimepicker2" type="text" name="end_time">
+					<img src = "./images/plus.png" id ="time-plus"/>
+				</div>
+			</div>
+			<p>*圖片:</p>
+			<input type="file" id="upload_photo" name="userPhoto" />
+			<p>*詳細敘述:</p>
+			<textarea id="discription" name="discription"></textarea>
+			<p>*選擇有相關的類別(3~5 項):</p> 
+			<div id = "checkbox-type">
+			<input class="first" type="checkbox" name="type" value="food"/>食物
+			<input type="checkbox" name="type" value="tech"/>科技
+			<input type="checkbox" name="type" value="cloth"/>服飾
+			<input type="checkbox" name="type" value="art"/>藝術
+			<input type="checkbox" name="type" value="traffic"/>交通<br/>
+			<input type="checkbox" name="type" value="travel"/>旅遊
+			<input type="checkbox" name="type" value="design"/>設計
+			<input type="checkbox" name="type" value="Home"/>家居
+			<input type="checkbox" name="type" value="game"/>遊戲
+			<input type="checkbox" name="type" value="pet"/>寵物
+			<input type="submit" id = "upload_submit" value="Upload Your Ad!!!" name="submit"/>
+			</div>
 		</form>
-		<!--<form name="uploadimage" action="" method="POST" enctype="multipart/form-data"> 
-        <input name="fileToUpload" type="file" id="fileToUpload">
-		</form>-->
-		<!--<input id="fileupload" type="file" name="files[]" data-url="/upload" multiple>
-		<script>$('#fileupload').fileupload({ dataType: 'json' })</script>-->
-            
-        <button class="ui button" id="upload_btn" >Upload</button>
+		<!--<div class="btn_block">
+		 <button class="select" id="type_food">食物</button>   
+		 <button class="select" id="type_tech">科技</button>  
+		 <button class="select" id="type_cloth">服飾</button>  
+		 <button class="select" id="type_art">藝術</button>  
+		 <button class="select" id="type_traffic">交通</button>  
+		</div>
+		<div class="btn_block">
+		 <button class="select" id="type_travel">旅遊</button>  
+		 <button class="select" id="type_design">設計</button>  
+		 <button class="select" id="type_Home">家居</button>  
+		 <button class="select" id="type_game">遊戲</button>  
+		 <button class="select" id="type_pet">寵物</button> 
+		</div>-->
             
     </div>
     
+  
     
-    
+    <div id='mainpage'>
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -104,9 +175,10 @@
                 <ul class="nav navbar-nav navbar-right">
    
                     <li class="page-scroll">
-					<button  id="log_in"><p>登入</p></button>
-					<button  id = "Register"><p id="regis_con">註冊</p></button>
+					<button id="log_in"><p>登入</p></button>
+					<button id = "Register"><p id="regis_con">註冊</p></button>
 					<button id ="Upload"><p id="regis_con">上傳</p></button>
+                    <button id="mypage"><p>我的資料</p></button>
 					<button id="log_out">登出</button>
                     </li>
                 </ul>
@@ -147,61 +219,89 @@
                
                       
                 
-                <div class="TreeMenu">
-					<div class="section">
-						<h3>飲食</h3>
-						<ul>
-							<li><a href="#">早午餐</a></li>
-								<div class="level2">
-									<ul>
-										<li><a href="#">西式</a></li>
-										<li><a href="#">中式</a></li>
-									</ul>
+                <div class="list-group" >
+					
+                        
+						<h3 id="food" class="list-group-item" >飲食</h3>
+                        <div class="section">
+						<div class="level1 list-group-item ">
+							<h4 >早午餐</h4>
+								<div class="level2  ">
+										<a href="#"  >西式</a>
+                                </div>
+                                <div class="level2 ">
+										<a href="#" >中式</a>
 								</div>
-							<li><a href="#">午餐 </a></li>
+                            </div>
+                        
+                            <div class="level1 list-group-item">
+							<h4>午餐 </h4>
+                                    <div class="level2">
+										<a href="#">西式</a>
+                                    </div>
+                                    <div class="level2">
+										<a href="#">中式</a>
+                                    </div>
+				
+                            </div>
+                        
+                            <div class="level1 list-group-item">
+							<h4>下午茶 / 點心</h4>
+                            </div>
+                        
+                            <div class="level1 list-group-item">
+							<h4>晚餐 </h4>
+                            
 								<div class="level2">
-									<ul>
-										<li><a href="#">西式</a></li>
-										<li><a href="#">中式</a></li>
-									</ul>
+										<a href="#">西式</a>
+                                </div>
+                                <div class="level2">
+										<a href="#">中式</a>
 								</div>
-							<li><a href="#">下午茶 / 點心</a></li>
-							<li><a href="#">晚餐 </a></li>
-								<div class="level2">
-									<ul>
-										<li><a href="#">西式</a></li>
-										<li><a href="#">中式</a></li>
-									</ul>
-								</div>
-							<li><a href="#">吃到飽</a></li>
-							<li><a href="#">飲料</a></li>
-						</ul>
+                            </div>
+                        
+                            <div class="level1 list-group-item">
+							<h4>吃到飽</h4>
+                            </div>
+                            <div class="level1 list-group-item">
+							<h4>飲料</h4>
+                            </div>
 					</div>
+                    
+                    
 					<!--.section-->
-					<div class="section">
-						<h3>服裝</h3>
-						<ul>
-							<li><a href="#">童裝</a></li>
-							<li><a href="#">女裝</a></li>
+					
+						<h3 class="list-group-item">服裝</h3>
+                    <div class="section">
+                            <div class="level1 list-group-item">
+                            <h4>童裝</h4>
+                            </div>
+                            <div class="level1 list-group-item">
+							<h4>女裝</h4>
 								<div class="level2">
-									<ul>
-										<li><a href="#">上衣</a></li>
-										<li><a href="#">下著</a></li>
-										<li><a href="#">配件/鞋子</a></li>
-									</ul>
+										<a href="#">上衣</a>
+                                </div>
+                                <div class="level2">
+										<a href="#">下著</a>
+                                </div>
+                                <div class="level2">
+										<a href="#">配件/鞋子</a>
 								</div>
-							<li><a href="#">男裝</a></li>
+                           </div>
+                            <div class="level1 list-group-item">
+							<h4>男裝</h4>
 								<div class="level2">
-									<ul>
-										<li><a href="#">上衣</a></li>
-										<li><a href="#">下著</a></li>
-										<li><a href="#">配件/鞋子</a></li>
-									</ul>
+										<a href="#">上衣</a>
+                                </div>
+                                <div class="level2">
+										<a href="#">下著</a>
+                                </div>
+                                <div class="level2">
+										<a href="#">配件/鞋子</a>
+                                </div>	
 								</div>
-						</ul>
+                            </div>
 					</div>
-				 <!--.section-->
-				</div>
 				<!--.TreeMenu-->
             </div>
    
@@ -262,6 +362,15 @@
                 <div class="col-lg-12">
                     <p>Copyright &copy; WP 2015</p>
                 </div>
+				<!--Fb 讚-->
+				<!--<div
+				  class="fb-like"
+				  data-share="true"
+				  data-width="450"
+				  data-show-faces="true">
+				</div>-->
+				<!--FB 留言板
+				<div class="fb-comments" style="z-index: 100001;" data-href="http://luffy.ee.ncku.edu.tw:8446/homepage/homepage.html" data-width="400px" data-numposts="2"></div>-->
             </div>
         </footer>
 
@@ -270,9 +379,293 @@
 
     
     
+</div>
+    
+    
+    
+<div id= 'userpage'>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+           
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+   
+                    <li class="page-scroll">
+					<button id ="Upload"><p id="regis_con">上傳</p></button>
+                    <button id="btn_main"><p>回首頁</p></button>        
+					<button id="log_out">登出</button>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>    
+     
+    
+
+    <!-- Page Content -->
+    <div id='content' class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+               
+             
+                 <img id ="userphoto" src="images/user.jpg" />
+               
+                <div class="lead" id="username">
+                
+                </div>
+    
+
+    
+               
+                      
+                
+                <div class="list-group" >
+					
+             <div class="section">
+                            <div class="level1 list-group-item">
+                        
+                            <h3 id="li_col"><span class="glyphicon glyphicon-heart" aria-hidden="true";></span> 收藏Ad</h3>
+                            </div>
+                            <div class="level1 list-group-item">
+			             <h3 id="li_pos"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 發布Ad</h3>
+                           </div>
+                            <div class="level1 list-group-item">
+						<h3 id="li_cal"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 日曆</h3>
+				            </div>
+                          <div class="level1 list-group-item">
+						<h3 id="li_set"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> 設定</h3>
+				            </div>
+                            </div>
+					</div>
+				<!--.TreeMenu-->
+            </div>
+   
+            
+            <div class="col-md-9">
+
+                <div class="row carousel-holder">
+
+                    <div class="col-md-12">
+                        
+           <nav id="COLLECTION" class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" >COLLECTION</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="#">食物</a></li>
+          <li><a href="#">科技</a></li>
+          <li><a href="#">服飾</a></li>
+          <li><a href="#">藝術</a></li>
+          <li><a href="#">交通</a></li>
+          <li><a href="#">旅遊</a></li>
+          <li><a href="#">設計</a></li>
+          <li><a href="#">家居</a></li>
+          <li><a href="#">遊戲</a></li>
+          <li><a href="#">寵物</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+                        
+                        
+                        
+           <nav id="POST" class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" >POST</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+          <li><a href="#">食物</a></li>
+          <li><a href="#">科技</a></li>
+          <li><a href="#">服飾</a></li>
+          <li><a href="#">藝術</a></li>
+          <li><a href="#">交通</a></li>
+          <li><a href="#">旅遊</a></li>
+          <li><a href="#">設計</a></li>
+          <li><a href="#">家居</a></li>
+          <li><a href="#">遊戲</a></li>
+          <li><a href="#">寵物</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>                        
+                        
+                  
+                    </div>
+                </div>
+                
+                <div id="food_box">
+                    <h3>食物</h3>
+                <div class="row">
+                <div id="box"></div>
 
 
-    <script src="log.js"></script>
+                </div>
+                </div>    
+                <div id="tech_box">
+                    <h3>科技</h3>
+                <div class="row">
+                <div id="box"></div>
+
+
+                </div>
+                </div>
+                  <div id="cloth_box">
+                    <h3>服飾</h3>  
+                <div class="row">
+                <div id="box"></div>
+
+
+                </div>
+                </div>              
+                <div id="art_box">
+                    <h3>藝術</h3>
+                <div class="row">
+                <div id="box"></div>
+
+
+                </div>
+                </div>                
+                 <div id="traffic_box">
+                     <h3>交通</h3>
+                <div class="row">
+                <div id="box"></div>
+
+
+                </div>
+                </div>               
+                <div id="travel_box">
+                    <h3>旅行</h3>
+                <div class="row">
+                <div id="box"></div>
+
+
+                </div>
+                </div>                
+                 <div id="design_box">
+                     <h3>設計</h3>
+                <div class="row">
+                <div id="box"></div>
+
+
+                </div>
+                </div>               
+                <div id="Home_box">
+                    <h3>家居</h3>
+                <div class="row">
+                <div id="box"></div>
+
+
+                </div>
+                </div>                
+                <div id="game_box">
+                    <h3>遊戲</h3>
+                <div class="row">
+                <div id="box"></div>
+
+
+                </div>
+                </div>                
+                 <div id="pet_box">
+                     <h3>寵物</h3>
+                <div class="row">
+                <div id="box"></div>
+
+
+                </div>
+                </div>               
+                      
+                
+                
+                
+                
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; WP 2015</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    
+ 
+    
+</div>
+    
+    
+    
+    
+      
+    
+    <script src="app.js"></script>
+    <script src="log.js"></script> 
+    
 </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </html>
