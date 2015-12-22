@@ -169,6 +169,9 @@ body{
 .Ad-image {
 	width: 252px;
 	height: 252px;
+	margin-top:auto;
+	margin-bottom:auto;
+	overflow:hidden;
 }
 .select {
     background-color: #FBBC05;

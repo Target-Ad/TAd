@@ -1,7 +1,6 @@
 node_modules/
 npm-debug.log
 port
-public/homepage/postAdImage/*
 server/tst.ls
 server/tst.js
 user/

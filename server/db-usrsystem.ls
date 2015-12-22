@@ -21,7 +21,7 @@ module.exports =
 	input-usr: (usr)!->
 		mg-client.connect url, (err, db)->
 			console.log "inputing usr"
-			usr <<< {_id:uuid.v4!, post-ad:[], watch-ad-id: []}
+			usr <<< {_id:uuid.v4!, post-ad:[], watch-ad-id:[], adcoin:0}
 			collection = db.collection \usrModels
 			collection.insertOne usr, {w:1}, (err, result)->
 				db.close!

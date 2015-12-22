@@ -45,6 +45,7 @@ module.exports = {
       usr._id = uuid.v4();
       usr.postAd = [];
       usr.watchAdId = [];
+      usr.adcoin = 0;
       collection = db.collection('usrModels');
       return collection.insertOne(usr, {
         w: 1

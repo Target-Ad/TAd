@@ -69,10 +69,28 @@ $(document).ready(function(){
 		for(var i =0; i<6;i++){
 			rough = r.response[i].discription.substring(0, 20);
 			console.log(rough);
-			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\" id=\"thumbnail-"+i+"\"><div id=\"image-container-"+i+"\" class = \"Ad-image\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/></div><div class=\"caption\" id=\"more_content-"+i+"\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div><span id=\"clock-"+i+"\"></span></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].discription.substring(0, 20)+".... read more"+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
+			appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\" id=\"thumbnail-"+i+"\"><div id=\"image-container-"+i+"\" class = \"Ad-image\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/></div><div class=\"caption\" id=\"more_content-"+i+"\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div><span id=\"clock-start-"+i+"\"></span></div><div><span id=\"clock-end-"+i+"\"></span></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.response[i].discription.substring(0, 20)+".... read more"+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
 			AdArray[i] = r.response[i]._id;
 			$("#box").append(appendcontent);
-			$('#clock-'+i).countdown(r.response[i].period[0].start)
+			$("#clock-end-"+i).hide();
+			$('#clock-start-'+i).countdown(r.response[i].period[0].start)
+			.on('update.countdown', function(event) {
+				var format = '%H:%M:%S';
+				if(event.offset.days > 0) {
+					format = '%-d day%!d ' + format;
+				}
+				if(event.offset.weeks > 0) {
+					format = '%-w week%!w ' + format;
+				}
+				$(this).html(event.strftime(format));
+			})
+			.on('finish.countdown', function(event) {
+				$('#clock-end-'+i).show();
+				$('#clock-start-'+i).hide();
+				$(this).html("Already Expired")
+				.parent().addClass('disabled');
+			});
+			$('#clock-end-'+i).countdown(r.response[i].period[0].end)
 			.on('update.countdown', function(event) {
 				var format = '%H:%M:%S';
 				if(event.offset.days > 0) {
@@ -153,6 +171,8 @@ $(document).ready(function(){
 		});
 
 	});
+	$('#ad-owner').hide();
+	$('#ad-owner').attr('value', Cookies.get("_id"));
 	$('#uploadForm').submit(function() {
 		period = 0;
 		$(this).ajaxSubmit({
