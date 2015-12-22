@@ -105,7 +105,7 @@ $(document).ready(function(){
 				$(this).html("Already Expired")
 				.parent().addClass('disabled');
 			});
-			thebody = "<div id=\"content-block-img-"+i+"\" class=\"contents-display\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/></div><div id=\"content-block-right-"+i+"\" class=\"contents-display-right\"><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-block-"+i+"\">"+r.response[i].discription+"</p></div></div><div class=\"row\" style=\"padding-top:15px;\"><div class=\"col-md-12\" ><div class=\"comment-container\" ><div class=\"col-md-1\" style=\"width: 50px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-10\"><b>Syuan</b></div><div class=\"col-md-10\" style=\"background-color: #fff; height: 25px;\">It's so good. I can buy what I want !</div></div></div><div class=\"col-md-12\" ><div class=\"col-md-1\" style=\"width: 40px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-11\"><input type=\"text\" class=\"form-control col-md-4\" placeholder=\"please leave a message\"></div></div></div></div>";
+			thebody = "<div id=\"content-block-img-"+i+"\" class=\"contents-display\"><img id=\"block-Ad-image-"+i+"\" src='./postAdImage/"+r.response[i].imag+".jpg'alt=\"\"/></div><div id=\"content-block-right-"+i+"\" class=\"contents-display-right\"><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.response[i].topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-block-"+i+"\">"+r.response[i].discription+"</p></div></div><div class=\"row\" style=\"padding-top:15px;\"><div class=\"col-md-12\" ><div class=\"comment-container\" ><div class=\"col-md-1\" style=\"width: 50px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-10\"><b>Syuan</b></div><div class=\"col-md-10\" style=\"background-color: #fff; height: 25px;\">It's so good. I can buy what I want !</div></div></div><div class=\"col-md-12\" ><div class=\"col-md-1\" style=\"width: 40px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-11\"><input type=\"text\" class=\"form-control col-md-4\" placeholder=\"please leave a message\"></div></div></div></div>";
 			$("#thebody").append(thebody);
 			
 			$("#more_content-"+i).click(function(){
@@ -137,9 +137,13 @@ $(document).ready(function(){
 			function(r){
 				$("#image-container-"+id).remove();
 				$("#Ad-image-"+id).remove();
+				$("#block-Ad-image-"+id).remove();
+				$("#content-block-right-"+id).remove();
 				$("<div id=\"image-container-"+id+"\" class = \"Ad-image\"><img id=\"Ad-image-"+id+"\" src='./postAdImage/"+r.imag+".jpg'alt=\"\"/></div>").insertBefore("#more_content-"+id);
+				$("#content-block-img-"+id).append("<img id=\"block-Ad-image-"+id+"\" src='./postAdImage/"+r.imag+".jpg'alt=\"\"/>");
+				$("<div id=\"content-block-right-"+id+"\" class=\"contents-display-right\"><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+id+"\">"+r.topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-block-"+id+"\">"+r.discription+"</p></div></div><div class=\"row\" style=\"padding-top:15px;\"><div class=\"col-md-12\" ><div class=\"comment-container\" ><div class=\"col-md-1\" style=\"width: 50px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-10\"><b>Syuan</b></div><div class=\"col-md-10\" style=\"background-color: #fff; height: 25px;\">It's so good. I can buy what I want !</div></div></div><div class=\"col-md-12\" ><div class=\"col-md-1\" style=\"width: 40px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-11\"><input type=\"text\" class=\"form-control col-md-4\" placeholder=\"please leave a message\"></div></div></div></div>").insertAfter("#content-block-img-"+id);
 				$("#Ad-topic-"+id).text(r.topic);
-				$("#Ad-content-"+id).text(r.discription);
+				$("#Ad-content-"+id).text(r.discription.substring(0, 20)+".... read more");
 				AdArray[id] = r._id;
 			});
 		});
@@ -163,9 +167,13 @@ $(document).ready(function(){
 			function(r){
 				$("#image-container-"+id).remove();
 				$("#Ad-image-"+id).remove();
+				$("#block-Ad-image-"+id).remove();
+				$("#content-block-right-"+id).remove();
 				$("<div id=\"image-container-"+id+"\" class = \"Ad-image\"><img id=\"Ad-image-"+id+"\" src='./postAdImage/"+r.imag+".jpg'alt=\"\"/></div>").insertBefore("#more_content-"+id);
+				$("#content-block-img-"+id).append("<img id=\"block-Ad-image-"+id+"\" src='./postAdImage/"+r.imag+".jpg'alt=\"\"/>");
+				$("<div id=\"content-block-right-"+id+"\" class=\"contents-display-right\"><div class=\"caption\"><div class=\"topic\"><p id = \"Ad-topic-"+id+"\">"+r.topic+"</p></div><div class=\"contents\"><p id =\"Ad-content-block-"+id+"\">"+r.discription+"</p></div></div><div class=\"row\" style=\"padding-top:15px;\"><div class=\"col-md-12\" ><div class=\"comment-container\" ><div class=\"col-md-1\" style=\"width: 50px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-10\"><b>Syuan</b></div><div class=\"col-md-10\" style=\"background-color: #fff; height: 25px;\">It's so good. I can buy what I want !</div></div></div><div class=\"col-md-12\" ><div class=\"col-md-1\" style=\"width: 40px;\"><img src=\"images/1.png\" /></div><div class=\"col-md-11\"><input type=\"text\" class=\"form-control col-md-4\" placeholder=\"please leave a message\"></div></div></div></div>").insertAfter("#content-block-img-"+id);
 				$("#Ad-topic-"+id).text(r.topic);
-				$("#Ad-content-"+id).text(r.discription);
+				$("#Ad-content-"+id).text(r.discription.substring(0, 20)+".... read more");
 				AdArray[id] = r._id;
 			});
 		});
