@@ -21,7 +21,7 @@ module.exports =
 	input-usr: (usr)!->
 		mg-client.connect url, (err, db)->
 			console.log "inputing usr"
-			usr <<< {_id:uuid.v4!, post-ad:[], watch-ad-id:[], adcoin:0}
+			usr <<< {_id:uuid.v4!, post-ad:[], watch-ad-id: []}
 			collection = db.collection \usrModels
 			collection.insertOne usr, {w:1}, (err, result)->
 				db.close!
@@ -130,3 +130,18 @@ module.exports =
 					console.error err
 				cb doc
 				db.close!
+	survey-input: (_id, score, cb)!->
+		console.log "survey button"
+		mg-client.connect url, (err, db)!->
+			collection_survey = db.collection \survey
+			##### find the userID in the db #####
+			collection_survey.find( { usr-id: _id } ) .toArray (err, doc)!->
+				console.log doc
+				if doc === []
+					survey-res = {usr-id: _id, score: [score]}
+					console.log survey-res
+					collection_survey.insertOne survey-res, {w:1}, (err, result)->
+					db.close!
+				else
+					console.log "hiiiiiiii"
+					collection_survey.update {usr-id:_id}, {$push: {score: score}}

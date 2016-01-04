@@ -45,7 +45,6 @@ module.exports = {
       usr._id = uuid.v4();
       usr.postAd = [];
       usr.watchAdId = [];
-      usr.adcoin = 0;
       collection = db.collection('usrModels');
       return collection.insertOne(usr, {
         w: 1
@@ -255,6 +254,39 @@ module.exports = {
         }
         cb(doc);
         return db.close();
+      });
+    });
+  },
+  surveyInput: function(_id, score, cb){
+    console.log("survey button");
+    mgClient.connect(url, function(err, db){
+      var collection_survey;
+      collection_survey = db.collection('survey');
+      collection_survey.find({
+        usrId: _id
+      }).toArray(function(err, doc){
+        var surveyRes;
+        console.log(doc);
+        if (deepEq$(doc, [], '===')) {
+          surveyRes = {
+            usrId: _id,
+            score: [score]
+          };
+          console.log(surveyRes);
+          collection_survey.insertOne(surveyRes, {
+            w: 1
+          }, function(err, result){});
+          db.close();
+        } else {
+          console.log("hiiiiiiii");
+          collection_survey.update({
+            usrId: _id
+          }, {
+            $push: {
+              score: score
+            }
+          });
+        }
       });
     });
   }

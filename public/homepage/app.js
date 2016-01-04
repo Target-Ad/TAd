@@ -40,4 +40,3 @@ $("#li_col").click(function(){
 
 
 $("#username").append("<p>"+Cookies.get('name')+"</p>");
-

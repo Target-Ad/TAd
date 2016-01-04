@@ -725,4 +725,40 @@ margin-top: 5px;
 	from { -o-transform: rotate(0deg) scale(0.59) skew(-31deg) translate(-28px); }
 	to { -o-transform: rotate(0deg) scale(1.008) skew(-1deg) translate(3px); }
 }
->>>>>>> bc6f0b01a522a572ac38f64b43d40deaf43cc2c7
+
+.AdSurvey {
+	position:fixed;
+	bottom:0;
+	right:0;
+	width:300px;
+	height:210px;
+	background-color:white;
+	z-index: 9999;
+	border:solid #FDC72F 3px;
+	display:None;
+}
+
+#SurveyTitle {
+	background-color:#FF8176;
+	border-radius:10px;
+	border:1px solid #ffaa22;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:18px;
+	padding-top:4px;
+	padding-bottom:7px;
+	margin-top:2px;
+	margin-bottom:2px;
+	width:80px;
+}
+
+#SurveyQ {
+	display:inline-block;
+	font-family:Arial;
+	font-size:14px;
+	padding-top:4px;
+	padding-bottom:7px;
+	margin-top:2px;
+	margin-bottom:2px;
+}

@@ -9,7 +9,7 @@ function Do(query, outputer, page){
 if(typeof(query) == 'object'){ // POST
 	console.log(query.file);
 	console.log(query.body);
-	adInform = {owner:query.body.owner, topic: query.body.upload_activity, shop: query.body.upload_shop, place: query.body.upload_location, discription: query.body.discription, start_time: query.body.start_time, end_time: query.body.end_time, type:query.body.type, path: query.file.path};
+	adInform = {topic: query.body.upload_activity, shop: query.body.upload_shop, place: query.body.upload_location, discription: query.body.discription, start_time: query.body.start_time, end_time: query.body.end_time, type:query.body.type, path: query.file.path};
 	usrsys.postAd(adInform,function(result){output(JSON.stringify(result))});
 	// query.file => file object
 	// query.body => other parameter
@@ -59,6 +59,11 @@ switch (param.page) {
 			var credentialUrl;
 			connectapi.getAuthUrl(function(returnUrl){output(JSON.stringify(returnUrl))});
 			break;
+		case 'getSurvey':
+			console.log('in getSurvey');
+			delete param.action;
+			delete param.page;
+			usrsys.surveyInput(param._id,param.score,function(result){output(JSON.stringify(result))});
 			break;
 		default:
 			output(JSON.stringify({stage:'default'}));

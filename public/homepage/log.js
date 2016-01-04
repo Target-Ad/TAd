@@ -222,6 +222,7 @@ $(document).ready(function(){
 				$("#log_in").hide();
 				$("#Upload").show();
 				$("#mypage").show();
+				location.assign("homepage.html");//重新整理頁面
 			}		
 			console.log(r);
 		});
@@ -235,6 +236,8 @@ $(document).ready(function(){
 		$("#Upload").hide();
 		$('#mypage').hide();
 		$('#userpage').hide();
+		$('#Survey').hide();//將問券關閉
+		console.log("GGGG");
 	});
 	$("#regis_btn").click(function(e){
 		e.preventDefault();
@@ -330,5 +333,88 @@ $(document).ready(function(){
 		$("#period-"+period).append("<div id = \"period-"+(period+1)+"\" class=\"period\"><input class= \"from\" id=\"datetimepicker1\" type=\"text\" name=\"start_time\">~ <input class=\"end\" id=\"datetimepicker2\" type=\"text\" name=\"end_time\"></div>");
 		period++;
 	});
-
+	
+	//計時2秒，顯示問卷
+	var isLog2 = Cookies.get('login_success');
+	if(isLog2 == "confirm"){
+		var SetTime=setTimeout("$('#Survey').show();",4000);
+	}
+	//問卷按鈕設置
+	$("#One").click(function(){
+		$('#Survey').hide();//將問券關閉
+		$.getJSON('do', {
+		page: 'homepage',
+		action: 'getSurvey',
+		_id: Cookies.get('_id'),
+		score: 1
+		},function(r){
+			console.log(r);
+		})
+	});
+	$("#Two").click(function(){
+		$('#Survey').hide();//將問券關閉
+		$.getJSON('do', {
+		page: 'homepage',
+		action: 'getSurvey',
+		_id: Cookies.get('_id'),
+		score: 2
+		},function(r){
+			console.log(r);
+		})
+	});
+	$("#Three").click(function(){
+		$('#Survey').hide();//將問券關閉
+		$.getJSON('do', {
+		page: 'homepage',
+		action: 'getSurvey',
+		_id: Cookies.get('_id'),
+		score: 3
+		},function(r){
+			console.log(r);
+		})
+	});
+	$("#Four").click(function(){
+		$('#Survey').hide();//將問券關閉
+		$.getJSON('do', {
+		page: 'homepage',
+		action: 'getSurvey',
+		_id: Cookies.get('_id'),
+		score: 4
+		},function(r){
+			console.log(r);
+		})
+	});
+	$("#Five").click(function(){
+		$('#Survey').hide();//將問券關閉
+		$.getJSON('do', {
+		page: 'homepage',
+		action: 'getSurvey',
+		_id: Cookies.get('_id'),
+		score: 5
+		},function(r){
+			console.log(r);
+		})
+	});
+	$("#Six").click(function(){
+		$('#Survey').hide();//將問券關閉
+		$.getJSON('do', {
+		page: 'homepage',
+		action: 'getSurvey',
+		_id: Cookies.get('_id'),
+		score: 6
+		},function(r){
+			console.log(r);
+		})
+	});
+	$("#LikeNone").click(function(){
+		$('#Survey').hide();//將問券關閉
+		$.getJSON('do', {
+		page: 'homepage',
+		action: 'getSurvey',
+		_id: Cookies.get('_id'),
+		score: 0
+		},function(r){
+			console.log(r);
+		})
+	});
 });
