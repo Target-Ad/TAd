@@ -4,3 +4,4 @@ port
 server/tst.ls
 server/tst.js
 user/
+/public/homepage/postAdImage/

@@ -5,7 +5,7 @@ multer = require('multer');
 upload = multer({
   dest: 'public/homepage/postAdImage/'
 });
-Do = require('./do.js');
+Do = require('./do');
 port = parseInt(fs.readFileSync('port', {
   encoding: 'utf-8'
 }));

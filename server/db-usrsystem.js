@@ -45,6 +45,7 @@ module.exports = {
       usr._id = uuid.v4();
       usr.postAd = [];
       usr.watchAdId = [];
+      usr.keepAdId = [];
       collection = db.collection('usrModels');
       return collection.insertOne(usr, {
         w: 1
@@ -105,11 +106,21 @@ module.exports = {
     });
   },
   postAd: function(adInform, cb){
+    console.log("ad-inform = ");
     console.log(adInform);
     return mgClient.connect(url, function(err, db){
-      var collection, imagName;
-      collection = db.collection('postAdModels');
+      var adCollection, usrCollection, imagName, adId;
+      adCollection = db.collection('postAdModels');
+      usrCollection = db.collection('usrModels');
       imagName = uuid.v4();
+      adId = uuid.v4();
+      usrCollection.update({
+        _id: adInform.owner
+      }, {
+        $push: {
+          postAd: adId
+        }
+      });
       return fs.rename(adInform.path, "public/homepage/postAdImage/" + imagName + ".jpg", function(){
         var i;
         delete adInform.path;
@@ -128,11 +139,11 @@ module.exports = {
           }
         }
         adInform.imag = imagName;
-        adInform._id = uuid.v4();
+        adInform._id = adId;
         adInform.rnd = randomInt(0, 500);
         delete adInform.start_time;
         delete adInform.end_time;
-        return collection.insertOne(adInform, {
+        return adCollection.insertOne(adInform, {
           w: 1
         }, function(err, result){
           cb(result);
@@ -194,6 +205,13 @@ module.exports = {
           }, {
             $push: {
               watchAdId: AdId
+            }
+          });
+          usrCollection.update({
+            _id: usrId
+          }, {
+            $push: {
+              keepAdId: AdId
             }
           });
           adCollection.update({
@@ -278,7 +296,6 @@ module.exports = {
           }, function(err, result){});
           db.close();
         } else {
-          console.log("hiiiiiiii");
           collection_survey.update({
             usrId: _id
           }, {
@@ -287,6 +304,34 @@ module.exports = {
             }
           });
         }
+      });
+    });
+  },
+  askForUsrInform: function(usrId, cb){
+    return mgClient.connect(url, function(err, db){
+      var adCollection, usrCollection, usrInform;
+      adCollection = db.collection('postAdModels');
+      usrCollection = db.collection('usrModels');
+      usrInform = {};
+      usrCollection.findOne({
+        _id: usrId
+      }).then(function(usrDoc){
+        console.log(usrDoc);
+        adCollection.find({
+          _id: {
+            $in: usrDoc.postAd
+          }
+        }).toArray(function(err, postAdDoc){
+          usrInform.postAd = postAdDoc;
+          return adCollection.find({
+            _id: {
+              $in: usrDoc.keepAdId
+            }
+          }).toArray(function(err, keepAdDoc){
+            usrInform.keepAd = keepAdDoc;
+            return cb(usrInform);
+          });
+        });
       });
     });
   }

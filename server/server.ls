@@ -1,6 +1,6 @@
 require! <[express fs multer]>
 upload = multer {dest: 'public/homepage/postAdImage/'}
-Do = require \./do.js
+Do = require \./do
 port = parseInt(fs.readFileSync \port encoding: \utf-8)
 express-server = express!
 express-server.disable \etag

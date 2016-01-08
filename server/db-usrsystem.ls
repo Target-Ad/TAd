@@ -21,7 +21,7 @@ module.exports =
 	input-usr: (usr)!->
 		mg-client.connect url, (err, db)->
 			console.log "inputing usr"
-			usr <<< {_id:uuid.v4!, post-ad:[], watch-ad-id: []}
+			usr <<< {_id:uuid.v4!, post-ad:[], watch-ad-id: [], keep-ad-id:[]}
 			collection = db.collection \usrModels
 			collection.insertOne usr, {w:1}, (err, result)->
 				db.close!
@@ -55,10 +55,14 @@ module.exports =
 				cb result
 				db.close!
 	post-ad: (ad-inform, cb)->
+		console.log "ad-inform = "
 		console.log ad-inform
 		mg-client.connect url, (err, db)->
-			collection = db.collection \postAdModels
+			ad-collection = db.collection \postAdModels
+			usr-collection = db.collection \usrModels
 			imag-name = uuid.v4!
+			ad-id = uuid.v4!
+			usr-collection.update {_id:ad-inform.owner}, {$push: {post-ad: ad-id}}
 			fs.rename ad-inform.path, "public/homepage/postAdImage/"+imag-name+".jpg", ->
 				delete ad-inform.path
 				ad-inform.period = []
@@ -67,10 +71,10 @@ module.exports =
 				else
 					for i of ad-inform.start_time
 						ad-inform.period.push {start: ad-inform.start_time[i], end: ad-inform.end_time[i]}
-				ad-inform <<< {imag: imag-name, _id:uuid.v4!, rnd: random-int(0, 500)}
+				ad-inform <<< {imag: imag-name, _id:ad-id, rnd: random-int(0, 500)}
 				delete ad-inform.start_time
 				delete ad-inform.end_time
-				collection.insertOne ad-inform, {w:1}, (err, result)->
+				ad-collection.insertOne ad-inform, {w:1}, (err, result)->
 					cb result
 					db.close!
 	get-initial-data: (cb)->
@@ -99,6 +103,7 @@ module.exports =
 					break
 				else
 					usr-collection.update {_id:usr-id}, {$push: {watch-ad-id: Ad-id}}
+					usr-collection.update {_id:usr-id}, {$push: {keep-ad-id: Ad-id}}
 					ad-collection.update {_id:Ad-id}, {$push: {keep-user: usr-id}}
 					raccoon.liked usr-id, Ad-id, ->
 						console.log "user   "+usr-id+"    keep    "+Ad-id
@@ -143,5 +148,16 @@ module.exports =
 					collection_survey.insertOne survey-res, {w:1}, (err, result)->
 					db.close!
 				else
-					console.log "hiiiiiiii"
 					collection_survey.update {usr-id:_id}, {$push: {score: score}}
+	ask-for-usr-inform: (usr-id, cb)->
+		mg-client.connect url, (err, db)!->
+			ad-collection = db.collection \postAdModels
+			usr-collection = db.collection \usrModels
+			usr-inform = {}
+			usr-collection.findOne {_id: usr-id} .then (usr-doc)!->
+				console.log usr-doc
+				ad-collection.find {_id: { $in: usr-doc.post-ad}} .toArray (err, post-ad-doc)->
+					usr-inform.post-ad = post-ad-doc
+					ad-collection.find {_id: { $in: usr-doc.keep-ad-id}} .toArray (err, keep-ad-doc)->
+						usr-inform.keep-ad = keep-ad-doc
+						cb usr-inform
