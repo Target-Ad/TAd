@@ -103,6 +103,7 @@
 			enctype="multipart/form-data"
 			action="/homepage/do"
 			method="post">
+			<input type="text" id="upload_name" name="upload_name" >
 			<p>*活動名稱:</p>
 			<input type="text" id="upload_activity" name="upload_activity">
 			<p>*店家名稱:</p>
@@ -209,9 +210,9 @@
                         <div class="ui action input">
                         <input type="text" placeholder="Search...">
                                 <select class="ui compact selection dropdown">
-                                    <option value="all">All</option>
-                                    <option selected="" value="articles">Articles</option>
-                                    <option value="products">Products</option>
+                                    <option value="all">全部</option>
+                                    <option selected="" value="articles">飲食</option>
+                                    <option value="products">服裝</option>
                                 </select>
 
                         <button class="ui icon button">

@@ -793,4 +793,7 @@ margin-top: 5px;
 #in_upload{
     margin-left: 25%;
 }
+#upload_name {
+	display:None;
+}
 

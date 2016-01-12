@@ -115,7 +115,7 @@ module.exports = {
       imagName = uuid.v4();
       adId = uuid.v4();
       usrCollection.update({
-        _id: adInform.owner
+        account: adInform.owner
       }, {
         $push: {
           postAd: adId
@@ -140,6 +140,7 @@ module.exports = {
         }
         adInform.imag = imagName;
         adInform._id = adId;
+        adInform.owner = adInform.owner;
         adInform.rnd = randomInt(0, 500);
         delete adInform.start_time;
         delete adInform.end_time;

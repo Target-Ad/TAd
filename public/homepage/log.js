@@ -21,6 +21,7 @@ $(document).ready(function(){
     }
 	$("#Upload").click(function(){
 		$('#overlay, #upload-block').show();
+		document.getElementById("upload_name").value=Cookies.get('name');
 		$('#overlay2, #mypage-block').hide();
 	});
     $('#overlay').click(function(){
@@ -191,6 +192,7 @@ $(document).ready(function(){
 
 			success: function(response) {
 				console.log(response);
+				window.location.reload();
 			}
 		});
 		//Very important line, it disable the page refresh.

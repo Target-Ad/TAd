@@ -62,7 +62,7 @@ module.exports =
 			usr-collection = db.collection \usrModels
 			imag-name = uuid.v4!
 			ad-id = uuid.v4!
-			usr-collection.update {_id:ad-inform.owner}, {$push: {post-ad: ad-id}}
+			usr-collection.update {account:ad-inform.owner}, {$push: {post-ad: ad-id}}
 			fs.rename ad-inform.path, "public/homepage/postAdImage/"+imag-name+".jpg", ->
 				delete ad-inform.path
 				ad-inform.period = []
@@ -71,7 +71,7 @@ module.exports =
 				else
 					for i of ad-inform.start_time
 						ad-inform.period.push {start: ad-inform.start_time[i], end: ad-inform.end_time[i]}
-				ad-inform <<< {imag: imag-name, _id:ad-id, rnd: random-int(0, 500)}
+				ad-inform <<< {imag: imag-name, _id:ad-id, owner:ad-inform.owner, rnd: random-int(0, 500)}
 				delete ad-inform.start_time
 				delete ad-inform.end_time
 				ad-collection.insertOne ad-inform, {w:1}, (err, result)->
