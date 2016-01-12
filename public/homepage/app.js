@@ -18,8 +18,8 @@ $("#mypage").click(function(){
 		$.getJSON('do', data, 
 		function(r){
 			for(var i=0; i<r.postAd.length; i++){
-				appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\" id=\"thumbnail-"+i+"\"><div id=\"image-container-"+i+"\" class = \"Ad-image\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.postAd[i].imag+".jpg'alt=\"\"/></div><div class=\"caption\" id=\"more_content-postAd-"+i+"\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.postAd[i].topic+"</p></div><div><span id=\"clock-start-"+i+"\"></span></div><div><span id=\"clock-end-"+i+"\"></span></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.postAd[i].discription.substring(0, 20)+".... read more"+"</p></div></div><button id =\""+i+"\" class = \"discard\">discard</button><button id =\""+i+"\"class = \"collect\">keep</button></div></div> "; 
-				$("#user-page-post-ad").append(appendcontent);
+				appendcontent = "<div class=\"col-sm-4 col-lg-4 col-md-4\"><div class=\"thumbnail\" id=\"thumbnail-"+i+"\"><div id=\"image-container-"+i+"\" class = \"Ad-image\"><img id=\"Ad-image-"+i+"\" src='./postAdImage/"+r.postAd[i].imag+".jpg'alt=\"\"/></div><div class=\"caption\" id=\"more_content-postAd-"+i+"\"><div class=\"topic\"><p id = \"Ad-topic-"+i+"\">"+r.postAd[i].topic+"</p></div><div><span id=\"clock-start-"+i+"\"></span></div><div><span id=\"clock-end-"+i+"\"></span></div><div class=\"contents\"><p id =\"Ad-content-"+i+"\">"+r.postAd[i].discription.substring(0, 20)+".... read more"+"</p></div></div></div></div> "; 
+				$("#user-box").append(appendcontent);
 				$("#clock-end-"+i).hide();
 				$('#clock-start-'+i).countdown(r.postAd[i].period[0].start)
 				.on('update.countdown', function(event) {
