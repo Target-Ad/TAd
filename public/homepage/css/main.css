@@ -797,3 +797,13 @@ margin-top: 5px;
 	display:None;
 }
 
+#title-keep{
+	color: rgb(243, 69, 69);
+	font-weight: bold;   
+	display:None;	
+}
+#title-post{
+	color: rgb(243, 69, 69);
+	font-weight: bold;
+	display:None;
+}

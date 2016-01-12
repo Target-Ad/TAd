@@ -239,7 +239,6 @@ $(document).ready(function(){
 		$('#mypage').hide();
 		$('#userpage').hide();
 		$('#Survey').hide();//±N°İ¨éÃö³¬
-		console.log("GGGG");
 	});
 	$("#regis_btn").click(function(e){
 		e.preventDefault();
