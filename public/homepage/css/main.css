@@ -425,6 +425,13 @@ font-weight: bolder;
 
 }
 
+.shop p{
+font-size: 12px;
+text-align: -webkit-center;
+font-weight: bolder;
+
+}
+
 .contents{
     background-color: rgb(232, 241, 249);
 }
