@@ -115,7 +115,7 @@ module.exports = {
       imagName = uuid.v4();
       adId = uuid.v4();
       usrCollection.update({
-        _id: adInform.owner
+        account: adInform.owner
       }, {
         $push: {
           postAd: adId
@@ -420,5 +420,4 @@ function deepEq$(x, y, type){
     stack.pop();
     return result;
   }
-} }
 }

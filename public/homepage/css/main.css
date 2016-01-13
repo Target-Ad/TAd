@@ -31,6 +31,15 @@ body{
     top: 6.75%;
 }
 
+#overlay3{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+    z-index: 150000;
+    display: none;
+}
+
 #login-block{
     position: fixed;
     z-index: 100001;
@@ -813,4 +822,12 @@ margin-top: 5px;
 	color: rgb(243, 69, 69);
 	font-weight: bold;
 	display:None;
+}
+
+.load{
+	font-size:40px;
+	font-weight: bold;
+	color:#FF8176;
+	padding-left: 45%;
+    padding-top: 20%;
 }

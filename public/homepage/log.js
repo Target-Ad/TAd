@@ -184,6 +184,8 @@ $(document).ready(function(){
 	$('#ad-owner').attr('value', Cookies.get("_id"));
 	$('#uploadForm').submit(function() {
 		period = 0;
+		//loader
+		$("#overlay3").show();
 		$(this).ajaxSubmit({
 
 			error: function(xhr) {
